@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Where Dots Meet Trees — Lahe Lahe Collectives Blog</title>
+  <meta name="description" content="Pattachitra meets poetry: how a visit to Nehru Park, Chanakyapuri became a celebration of nature, gratitude, and living tradition — painted slowly, beautifully, by hand."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --vermilion: #C0392B;
+      --temple-gold: #B8860B;
+      --deep-black: #1A1008;
+      --parchment: #F5EDD6;
+      --warm-cream: #FAF4E8;
+      --burnt-sienna: #8B4513;
+      --forest-green: #2D5016;
+      --sky-blue: #6BA3BE;
+      --border-pattern: repeating-linear-gradient(
+        90deg,
+        var(--vermilion) 0px, var(--vermilion) 8px,
+        var(--temple-gold) 8px, var(--temple-gold) 16px,
+        var(--forest-green) 16px, var(--forest-green) 24px,
+        var(--temple-gold) 24px, var(--temple-gold) 32px
+      );
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--warm-cream);
+      color: var(--deep-black);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: var(--parchment);
+      border-bottom: 3px solid var(--deep-black);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .site-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--deep-black);
+      text-decoration: none;
+    }
+
+    .site-logo span {
+      color: var(--vermilion);
+    }
+
+    .header-nav {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--burnt-sienna);
+    }
+
+    /* ORNAMENTAL BORDER STRIP */
+    .border-strip {
+      height: 8px;
+      background: var(--border-pattern);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      padding: 80px 60px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.2s forwards;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-top: 20px;
+    }
+
+    .post-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--temple-gold);
+      opacity: 0.4;
+      letter-spacing: -0.02em;
+    }
+
+    .post-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--vermilion);
+      border-left: 3px solid var(--vermilion);
+      padding-left: 12px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--deep-black);
+    }
+
+    .hero h1 em {
+      color: var(--vermilion);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--burnt-sienna);
+      line-height: 1.7;
+      max-width: 380px;
+      font-style: italic;
+    }
+
+    .post-date {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #999;
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+    }
+
+    /* ARTWORK FRAME */
+    .artwork-frame {
+      position: relative;
+    }
+
+    .artwork-frame::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      background: var(--border-pattern);
+      z-index: 0;
+    }
+
+    .artwork-frame::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      background: var(--deep-black);
+      z-index: 1;
+    }
+
+    .artwork-frame img {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: block;
+    }
+
+    .artwork-caption {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    /* DIVIDER */
+    .ornament {
+      text-align: center;
+      margin: 50px auto;
+      color: var(--temple-gold);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* BODY CONTENT */
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.5s forwards;
+    }
+
+    .article-body p {
+      font-size: 1.05rem;
+      line-height: 1.95;
+      color: #2a1f10;
+      margin-bottom: 1.8em;
+    }
+
+    .article-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--deep-black);
+      margin: 2.5em 0 0.8em;
+      line-height: 1.2;
+    }
+
+    .article-body h2 em {
+      color: var(--vermilion);
+      font-style: italic;
+    }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      border-left: 4px solid var(--temple-gold);
+      margin: 2.5em 0;
+      padding: 20px 30px;
+      background: var(--parchment);
+      position: relative;
+    }
+
+    .pull-quote::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      color: var(--temple-gold);
+      opacity: 0.25;
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      line-height: 1;
+    }
+
+    .pull-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--burnt-sienna);
+      line-height: 1.5;
+      margin: 0 !important;
+    }
+
+    /* POEM BLOCK */
+    .poem-block {
+      background: var(--deep-black);
+      color: var(--parchment);
+      padding: 50px 60px;
+      margin: 3em -60px;
+      position: relative;
+    }
+
+    .poem-block::before, .poem-block::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 8px;
+      background: var(--border-pattern);
+    }
+    .poem-block::before { top: 0; }
+    .poem-block::after { bottom: 0; }
+
+    .poem-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--temple-gold);
+      margin-bottom: 30px;
+    }
+
+    .poem-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .poem-stanza {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      line-height: 2;
+      color: #e8d9b8;
+    }
+
+    .poem-stanza p {
+      color: #e8d9b8 !important;
+      font-size: 0.9rem !important;
+      line-height: 2 !important;
+      margin-bottom: 1.5em !important;
+    }
+
+    /* CRAFT DETAIL SECTION */
+    .craft-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--deep-black);
+      margin: 3em 0;
+    }
+
+    .craft-detail-item {
+      padding: 28px 32px;
+      border-right: 2px solid var(--deep-black);
+      border-bottom: 2px solid var(--deep-black);
+    }
+
+    .craft-detail-item:nth-child(even) { border-right: none; }
+    .craft-detail-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    .craft-detail-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--vermilion);
+      margin-bottom: 8px;
+    }
+
+    .craft-detail-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--deep-black);
+      line-height: 1.4;
+    }
+
+    /* CTA */
+    .cta-block {
+      text-align: center;
+      padding: 60px 40px;
+      background: var(--parchment);
+      border: 2px solid var(--deep-black);
+      margin-top: 4em;
+      position: relative;
+    }
+
+    .cta-block::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px dashed var(--temple-gold);
+      pointer-events: none;
+    }
+
+    .cta-block h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .cta-block p {
+      font-size: 0.9rem;
+      color: #666;
+      max-width: 420px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--deep-black);
+      color: var(--parchment);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: var(--vermilion);
+    }
+
+    /* FOOTER */
+    .post-footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #ddd;
+    }
+
+    .post-footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    .post-footer-links {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--burnt-sienna);
+    }
+
+    /* AUTHOR BYLINE */
+    .author-byline {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .author-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--temple-gold);
+      flex-shrink: 0;
+    }
+
+    .author-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--deep-black);
+      line-height: 1.3;
+    }
+
+    .author-role {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--burnt-sienna);
+      text-transform: uppercase;
+    }
+
+    /* AUTHOR CARD (end of article) */
+    .author-card {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 32px 36px;
+      border: 2px solid var(--deep-black);
+      background: var(--parchment);
+      margin-top: 4em;
+    }
+
+    .author-card-photo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--temple-gold);
+      flex-shrink: 0;
+    }
+
+    .author-card-text {}
+
+    .author-card-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--vermilion);
+      margin-bottom: 6px;
+    }
+
+    .author-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--deep-black);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .author-card-bio {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.7;
+      margin: 0 !important;
+    }
+
+    @media (max-width: 768px) {
+      .author-card { flex-direction: column; text-align: center; }
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .site-header { padding: 16px 24px; }
+      .hero { grid-template-columns: 1fr; padding: 40px 24px; gap: 40px; }
+      .hero h1 { font-size: 2.4rem; }
+      .post-number { font-size: 3.5rem; }
+      .article-body { padding: 0 24px 60px; }
+      .poem-block { padding: 40px 24px; margin: 3em -24px; }
+      .poem-columns { grid-template-columns: 1fr; gap: 20px; }
+      .craft-details { grid-template-columns: 1fr; }
+      .craft-detail-item { border-right: none !important; }
+      .post-footer { padding: 30px 24px; flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" class="site-logo">Lahe <span>Lahe</span> Collectives</a>
+    <nav class="header-nav">Journal · Stories from the Craft</nav>
+  </header>
+
+  <div class="border-strip"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-meta">
+      <div class="post-number">01</div>
+      <div class="post-tag">Artisan Stories · Pattachitra · Nature</div>
+      <h1>Where <em>Trees</em> Become<br/>Tradition</h1>
+      <p class="hero-subtitle">
+        The first outing in Nehru Park, Chanakyapuri — a rediscovery of nature, its beauty, bounty, and abundance. The feeling of joy. The sense of gratitude.
+      </p>
+      <div class="author-byline">
+        <img src="Arunima Chakravarty.jpg" alt="Arunima Chakravarty Khadikkar" class="author-photo"/>
+        <div class="author-info">
+          <div class="author-name">Arunima Chakravarty Khadikkar</div>
+          <div class="author-role">Poet · Artist · Collaborator, Lahe Lahe Collectives</div>
+        </div>
+      </div>
+      <div class="post-date">April 2026 &nbsp;·&nbsp; Lahe Lahe Collectives</div>
+    </div>
+
+    <div>
+      <div class="artwork-frame">
+        <img src="pattachitra_img1.jpeg" alt="Pattachitra hand-painted artwork depicting three women celebrating nature amidst trees and foliage with a peacock — by Arunima Chakravarty Khadikkar for Lahe Lahe Collectives" />
+      </div>
+      <p class="artwork-caption">Hand-painted Pattachitra by Arunima Chakravarty Khadikkar · Natural pigments on cotton canvas · 45+ hours</p>
+    </div>
+  </section>
+
+  <div class="border-strip"></div>
+
+  <!-- BODY -->
+  <article class="article-body">
+
+    <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <p>
+      There is a park in South Delhi where the city exhales. Nehru Park, Chanakyapuri — where the canopy closes over your head like a temple roof and the hum of traffic becomes, for a moment, someone else's concern. It was here, on an unhurried morning, that this piece was born.
+    </p>
+
+    <p>
+      Not from a brief. Not from a mood board. From a walk.
+    </p>
+
+    <p>
+      The artisan who painted this tote carried no sketch — only the memory of the morning light through the trees, the sound of birds in the branches, and the quiet question that only nature asks: <em>what do we actually owe this world?</em>
+    </p>
+
+    <div class="pull-quote">
+      <p>We can only live and let live, know what is need, and not just want, accept our sins and undo any wrong…</p>
+    </div>
+
+    <h2>The <em>Language</em> of Pattachitra</h2>
+
+    <p>
+      Pattachitra — literally "cloth picture" in Sanskrit — is one of India's oldest narrative art forms, rooted in the temple traditions of Odisha. For over a thousand years, artisans known as <em>chitrakars</em> have told stories through bold outlines, intricate borders, and pigments derived from shells, stones, and plants. Every element is intentional. Every colour carries meaning.
+    </p>
+
+    <p>
+      In this piece, three figures — women dressed in the vivid costume of Pattachitra's classical vocabulary — reach towards branches, gather flowers, and rest in the shade. A peacock watches from the corner. The border is alive with its own rhythm of leaves and petals. The sky is the blue of open possibility.
+    </p>
+
+    <p>
+      It took 45 hours to paint. No machines. No shortcuts. Just a brush, a hand, and a tradition passed down through generations.
+    </p>
+
+    <!-- POEM -->
+    <div class="poem-block">
+      <div class="poem-label">✦ &nbsp; The Poem on the Piece</div>
+      <div class="poem-columns">
+        <div class="poem-stanza">
+          <p>Give some tree the gift of green again<br/>
+          Let one bird sing…<br/>
+          Give some tree the chance to drench in the rain<br/>
+          And enjoy the bounty of spring.<br/>
+          Give some tree the joy of bearing fruits<br/>
+          Which shall wither to bring their off-spring…<br/>
+          Give some tree the joy of spreading its roots<br/>
+          Firm below, upright above; akin to a king!</p>
+          <p>But who are we to give?<br/>
+          Who are we to grant?<br/>
+          The joy of life or even a song?<br/>
+          We can only live and let live,<br/>
+          Know what is need, and not just want,<br/>
+          Accept our sins and undo any wrong…<br/>
+          For…</p>
+        </div>
+        <div class="poem-stanza">
+          <p>It is the tree which gives us greens<br/>
+          Delights us, inspires us<br/>
+          Encouraging us thus…<br/>
+          Its branches harness,<br/>
+          The weight of lives;<br/>
+          Amidst those greens, the birds do sing!</p>
+          <p>It is the tree which creates the magical rains<br/>
+          Drenches us, fulfils us<br/>
+          Enamouring us thus…<br/>
+          The colours of flowers,<br/>
+          The humming of bees;<br/>
+          Amidst the melange, unfurls the beauty of spring!</p>
+          <p>It is the tree which bears the bountiful fruits<br/>
+          Nourishes us, feeds us<br/>
+          Enriching us thus…</p>
+        </div>
+        <div class="poem-stanza">
+          <p>The seeds of new life,<br/>
+          The promise of future;<br/>
+          The tree instils its own values in its offspring!</p>
+          <p>'Tis the tree anchors earth through its roots<br/>
+          Protects us, shelters us<br/>
+          Encompassing us thus…<br/>
+          It stands firm,<br/>
+          Stalls much harm;<br/>
+          Dutiful, kind, rooted and upright just like a king!<br/>
+          So…</p>
+          <p>Who are we to give?<br/>
+          Aren't we the ones being given?<br/>
+          We are only a part… not the supreme of all!<br/>
+          We only need to live<br/>
+          Be kind, humble and pray to be forgiven<br/>
+          We are only a part…nature is the mother of all!</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>A Tote That <em>Carries</em> a Philosophy</h2>
+
+    <p>
+      At Lahe Lahe, we believe that objects can be arguments. This tote argues — quietly, beautifully — that slowness is not a flaw in a world of speed. That hand-painted imperfection is more honest than machine-made perfection. That the stories our things carry matter as much as the things themselves.
+    </p>
+
+    <p>
+      The poem inscribed below the painting was written by the same hands that shaped this morning outing — a meditation on gratitude, on our smallness before nature, and on the radical simplicity of needing less. It is not decoration. It is the point.
+    </p>
+
+    <div class="craft-details">
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Craft Tradition</div>
+        <div class="craft-detail-value">Pattachitra — Odisha, 1,000+ Years</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Time per Piece</div>
+        <div class="craft-detail-value">45+ Hours, Fully Hand-Painted</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Pigments</div>
+        <div class="craft-detail-value">Earth-derived, natural, non-toxic</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Canvas</div>
+        <div class="craft-detail-value">100% Natural Cotton · 38×42cm</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Artisan Bridge</div>
+        <div class="craft-detail-value">QR code linking you to the maker's story</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">MOQ (B2B)</div>
+        <div class="craft-detail-value">12 pieces · Custom branding available</div>
+      </div>
+    </div>
+
+    <p>
+      Every Lahe Lahe tote carries a Digital Artisan Bridge QR on its back — scan it and meet the person who gave this 45 hours of their life. Their name. Their village. Their tradition. You are not buying a bag. You are choosing to be part of a longer story.
+    </p>
+
+    <div class="author-card">
+      <img src="Arunima Chakravarty.jpg" alt="Arunima Chakravarty Khadikkar" class="author-card-photo"/>
+      <div class="author-card-text">
+        <div class="author-card-label">Written & Conceived By</div>
+        <div class="author-card-name">Arunima Chakravarty Khadikkar</div>
+        <p class="author-card-bio">Poet, artist, and collaborator with Lahe Lahe Collectives. Arunima's work explores the quiet conversation between nature, memory, and the hand-made. This poem was born on a morning walk through Nehru Park, Chanakyapuri — and painted, slowly, beautifully, from that same breath.</p>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <h3>Own a Piece of Living Tradition</h3>
+      <p>Browse the Heritage Canvas Collection — each tote individually hand-painted, each one unrepeatable.</p>
+      <a href="https://lahelahe.co.in/shop" class="cta-btn">Explore the Collection →</a>
+    </div>
+
+  </article>
+
+  <div class="border-strip"></div>
+
+  <footer class="post-footer">
+    <div class="post-footer-brand">Lahe Lahe Collectives &nbsp;·&nbsp; Art You Can Carry</div>
+    <div class="post-footer-links">lahelahe.co.in &nbsp;·&nbsp; @lahelahecollective</div>
+  </footer>
+
+</body>
+</html>

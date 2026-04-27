@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curator Approval — Lahe Lahe Collectives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('oxPPz9drDF6XpIqwR');</script>
+<style>
+:root{
+  --cream:#F5F0E8;--cream-dark:#EDE6D6;--cream-light:#FAF7F2;
+  --forest:#2C5F2E;--forest-deep:#1A3D1C;
+  --gold:#B8860B;--gold-light:#D4A843;--gold-pale:#E8D5A0;
+  --ink:#1C1C1C;--text-muted:#6B6050;
+  --red:#7a2525;--red-bg:#faeaea;
+  --green-bg:#eaf3ec;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:17px;min-height:100vh;}
+
+nav{background:#fff;border-bottom:1px solid rgba(184,134,11,0.15);padding:0 60px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.3em;color:var(--forest-deep);text-decoration:none;font-weight:500;}
+.nav-back{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+.nav-back:hover{color:var(--forest-deep);}
+
+.wrap{max-width:720px;margin:0 auto;padding:52px 24px 80px;}
+
+.eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.5em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:rgba(184,134,11,0.4);}
+h1{font-size:clamp(32px,4vw,52px);font-weight:300;color:var(--forest-deep);line-height:1.05;margin-bottom:8px;}
+h1 em{font-style:italic;color:var(--gold);}
+.sub{font-size:14px;font-style:italic;color:var(--text-muted);line-height:1.75;margin-bottom:32px;max-width:480px;}
+
+/* State panels */
+.state{display:none;}
+.state.active{display:block;}
+
+/* Loading */
+.spinner{display:inline-block;width:22px;height:22px;border:2px solid rgba(184,134,11,0.2);border-top-color:var(--gold);border-radius:50%;animation:sp 0.8s linear infinite;vertical-align:middle;margin-right:10px;}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* Card */
+.card{border:1px solid rgba(184,134,11,0.2);background:#fff;margin-bottom:18px;overflow:hidden;}
+.card-head{background:var(--forest-deep);color:var(--gold-pale);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;}
+.card-head-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.35em;text-transform:uppercase;}
+.card-body{padding:18px 22px;}
+
+.badge{display:inline-block;padding:4px 14px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;}
+.badge-ok{background:rgba(44,95,46,0.12);color:var(--forest-deep);border:1px solid rgba(44,95,46,0.25);}
+.badge-rev{background:rgba(184,134,11,0.1);color:#6b4a10;border:1px solid rgba(184,134,11,0.3);}
+.badge-bad{background:rgba(122,37,37,0.08);color:var(--red);border:1px solid rgba(122,37,37,0.2);}
+
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(184,134,11,0.1);font-size:14px;}
+.row:last-child{border-bottom:none;}
+.rk{color:var(--text-muted);}
+.rv{font-weight:500;max-width:58%;text-align:right;}
+
+.scores{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.sc{background:var(--cream-dark);border:1px solid rgba(184,134,11,0.15);padding:12px;text-align:center;}
+.sc-lbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted);}
+.sc-val{font-size:2rem;font-weight:300;color:var(--forest-deep);margin:3px 0;line-height:1;}
+.sc-sub{font-size:11px;font-style:italic;color:var(--text-muted);}
+
+.sbar-wrap{margin-bottom:14px;}
+.sbar-lbl{display:flex;justify-content:space-between;font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.2em;color:var(--text-muted);margin-bottom:4px;}
+.sbar{height:4px;background:var(--cream-dark);}
+.sfill{height:100%;background:var(--gold);}
+
+.bio-block{border-left:3px solid var(--gold);padding-left:14px;font-style:italic;color:var(--text-muted);font-size:14px;line-height:1.8;margin-top:4px;}
+
+/* Approve / Reject buttons */
+.decision-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;}
+.btn-approve{padding:14px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;background:var(--forest-deep);color:#fff;border:none;cursor:pointer;transition:background 0.2s;width:100%;}
+.btn-approve:hover{background:var(--forest);}
+.btn-reject{padding:14px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;background:var(--red);color:#fff;border:none;cursor:pointer;transition:background 0.2s;width:100%;}
+.btn-reject:hover{background:#5a1a1a;}
+.btn-approve:disabled,.btn-reject:disabled{opacity:0.5;cursor:not-allowed;}
+
+/* Result states */
+.notif{padding:14px 18px;font-size:14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;line-height:1.6;border-left:3px solid;}
+.n-ok{background:var(--green-bg);color:var(--forest-deep);border-color:var(--forest);}
+.n-err{background:var(--red-bg);color:var(--red);border-color:var(--red);}
+.n-warn{background:#fef8e4;color:#6b4a10;border-color:var(--gold);}
+
+/* Artist page preview */
+.ap-preview{border:1px solid rgba(184,134,11,0.2);overflow:hidden;background:#fff;margin-top:20px;}
+.ap-nav{background:#fff;border-bottom:1px solid rgba(26,23,20,0.09);padding:0 20px;height:48px;display:flex;align-items:center;justify-content:space-between;}
+.ap-nav-logo{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.3em;color:var(--forest-deep);font-weight:500;}
+.ap-nav-links{display:flex;gap:16px;}
+.ap-nav-links span{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);}
+.ap-bread{background:var(--cream-dark);padding:6px 20px;font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.15em;color:var(--text-muted);border-bottom:1px solid rgba(184,134,11,0.12);text-transform:uppercase;}
+.ap-hero{display:grid;grid-template-columns:200px 1fr;min-height:240px;}
+.ap-hero-img{background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--text-muted);opacity:0.2;overflow:hidden;}
+.ap-hero-img img{width:100%;height:100%;object-fit:cover;opacity:1;}
+.ap-info{padding:1.5rem;display:flex;flex-direction:column;justify-content:center;background:#fff;border-left:1px solid rgba(184,134,11,0.12);}
+.ap-cat{font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.ap-name{font-size:1.8rem;font-weight:300;color:var(--forest-deep);line-height:1.05;margin-bottom:6px;}
+.ap-craft{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;line-height:1.6;}
+.ap-bio{font-size:12.5px;color:var(--text-muted);line-height:1.75;font-style:italic;margin-bottom:12px;}
+.ap-chips{display:flex;flex-wrap:wrap;gap:5px;}
+.ap-chip{padding:3px 10px;border:1px solid rgba(184,134,11,0.22);font-family:'Cinzel',serif;font-size:6.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);}
+.ap-gal-hd{background:var(--cream-dark);padding:7px 20px;border-top:1px solid rgba(184,134,11,0.12);border-bottom:1px solid rgba(184,134,11,0.12);font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted);}
+.ap-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--cream-dark);}
+.ap-gal-cell{aspect-ratio:1;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-muted);opacity:0.2;}
+.ap-foot{background:#fff;border-top:1px solid rgba(26,23,20,0.09);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.ap-foot-logo{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:var(--forest-deep);font-weight:500;}
+.ap-foot-tag{font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);}
+
+.download-btn{display:inline-block;margin-top:16px;padding:12px 24px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;background:var(--gold);color:#fff;border:none;cursor:pointer;text-decoration:none;transition:background 0.2s;}
+.download-btn:hover{background:var(--forest-deep);}
+
+@media(max-width:600px){nav{padding:0 20px;}.wrap{padding:36px 16px 60px;}.scores{grid-template-columns:1fr 1fr;}.ap-hero{grid-template-columns:1fr;}.ap-hero-img{min-height:160px;}.decision-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Lahe Lahe</a>
+  <a href="partners.html" class="nav-back">&#8592; Partners</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- STATE: Loading -->
+  <div class="state active" id="stateLoading">
+    <div class="eyebrow">Curator Portal</div>
+    <h1>Loading<br><em>application...</em></h1>
+    <p class="sub"><span class="spinner"></span> Reading application data...</p>
+  </div>
+
+  <!-- STATE: Invalid / expired -->
+  <div class="state" id="stateInvalid">
+    <div class="eyebrow">Curator Portal</div>
+    <h1>Link<br><em>invalid.</em></h1>
+    <p class="sub">This approval link is missing or malformed. Please open it directly from the submission email.</p>
+    <div class="notif n-err">This link cannot be used. Please use the Approve or Reject button from the original submission email.</div>
+  </div>
+
+  <!-- STATE: Review (main approval panel) -->
+  <div class="state" id="stateReview">
+    <div class="eyebrow">Curator Decision Required</div>
+    <h1>Artist<br><em>Application</em></h1>
+    <p class="sub" id="reviewSub">Review the submission below and approve or reject.</p>
+
+    <!-- Scorecard -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-head-title">Evaluation Scorecard</div>
+        <div id="verdictBadge" class="badge badge-ok">—</div>
+      </div>
+      <div class="card-body">
+        <div class="scores">
+          <div class="sc"><div class="sc-lbl">Overall</div><div class="sc-val" id="scOverall">—</div><div class="sc-sub">out of 100</div></div>
+          <div class="sc"><div class="sc-lbl">Profile</div><div class="sc-val" id="scProfile">—</div><div class="sc-sub">bio & identity</div></div>
+          <div class="sc"><div class="sc-lbl">Craft</div><div class="sc-val" id="scCraft">—</div><div class="sc-sub">specialisation</div></div>
+          <div class="sc"><div class="sc-lbl">Portfolio</div><div class="sc-val" id="scPortfolio">—</div><div class="sc-sub">images</div></div>
+        </div>
+        <div class="sbar-wrap">
+          <div class="sbar-lbl"><span>Readiness</span><span id="scPct">—</span></div>
+          <div class="sbar"><div class="sfill" id="scBar" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artist details -->
+    <div class="card">
+      <div class="card-head"><div class="card-head-title">Artist Details</div></div>
+      <div class="card-body">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr class="row"><td class="rk">Name</td><td class="rv" id="dName">—</td></tr>
+          <tr class="row"><td class="rk">Title</td><td class="rv" id="dTitle">—</td></tr>
+          <tr class="row"><td class="rk">Location</td><td class="rv" id="dLocation">—</td></tr>
+          <tr class="row"><td class="rk">Email</td><td class="rv" id="dEmail">—</td></tr>
+          <tr class="row"><td class="rk">Phone</td><td class="rv" id="dPhone">—</td></tr>
+          <tr class="row"><td class="rk">Website</td><td class="rv" id="dWebsite">—</td></tr>
+          <tr class="row"><td class="rk">Crafts</td><td class="rv" id="dCrafts">—</td></tr>
+          <tr class="row"><td class="rk">Experience</td><td class="rv" id="dExp">—</td></tr>
+          <tr class="row"><td class="rk">Lineage</td><td class="rv" id="dLineage">—</td></tr>
+          <tr class="row"><td class="rk">Awards</td><td class="rv" id="dAwards">—</td></tr>
+          <tr class="row"><td class="rk">Commission</td><td class="rv" id="dComm">—</td></tr>
+          <tr class="row"><td class="rk">Price Range</td><td class="rv" id="dPrice">—</td></tr>
+          <tr class="row"><td class="rk">Submitted</td><td class="rv" id="dDate">—</td></tr>
+        </table>
+        <p style="margin-top:14px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">Artist Bio</p>
+        <p class="bio-block" id="dBio">—</p>
+      </div>
+    </div>
+
+    <!-- Artist page preview -->
+    <p style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;">Artist Page Preview</p>
+    <div class="ap-preview">
+      <div class="ap-nav">
+        <div class="ap-nav-logo">Lahe Lahe</div>
+        <div class="ap-nav-links"><span>Home</span><span>Artists</span><span>Collections</span><span>Shop</span></div>
+      </div>
+      <div class="ap-bread">Home &nbsp;·&nbsp; Artists &nbsp;·&nbsp; <span id="apBread">—</span></div>
+      <div class="ap-hero">
+        <div class="ap-hero-img" id="apImg">—</div>
+        <div class="ap-info">
+          <div class="ap-cat" id="apCat">Artist · Lahe Lahe Collective</div>
+          <div class="ap-name" id="apName">—</div>
+          <div class="ap-craft" id="apCraft">—</div>
+          <div class="ap-bio" id="apBio">—</div>
+          <div class="ap-chips" id="apChips"></div>
+        </div>
+      </div>
+      <div class="ap-gal-hd">Selected Works</div>
+      <div class="ap-gallery">
+        <div class="ap-gal-cell">◈</div>
+        <div class="ap-gal-cell">◈</div>
+        <div class="ap-gal-cell">◈</div>
+      </div>
+      <div class="ap-foot">
+        <div class="ap-foot-logo">Lahe Lahe</div>
+        <div class="ap-foot-tag">lahelahe.co.in</div>
+      </div>
+    </div>
+
+    <div class="notif n-warn" style="margin-top:20px;">Approving will send the artist page HTML to lahelahe.connect@gmail.com and notify the artist at their email address.</div>
+
+    <div id="decisionErr" class="notif n-err" style="display:none;margin-top:10px;"><span></span></div>
+
+    <div class="decision-row">
+      <button class="btn-approve" id="btnApprove" onclick="decide('approve')">&#10003; Approve Artist</button>
+      <button class="btn-reject" id="btnReject" onclick="decide('reject')">&#10007; Reject Application</button>
+    </div>
+  </div>
+
+  <!-- STATE: Approved -->
+    <!-- STATE: Approved -->
+  <div class="state" id="stateApproved">
+    <div class="eyebrow">Decision Made</div>
+    <h1>Artist<br><em>Approved.</em></h1>
+    <p class="sub">The artist has been approved. Download the artist page file below, then upload it to your Netlify site.</p>
+    <div class="notif n-ok">&#10003; Approval confirmed and notification sent to lahelahe.connect@gmail.com.</div>
+    <div style="background:#fff;border:1px solid rgba(184,134,11,0.2);padding:24px 22px;margin:18px 0;">
+      <p style="font-family:Cinzel,serif;font-size:8px;letter-spacing:0.35em;text-transform:uppercase;color:#B8860B;margin-bottom:8px;">Ready to Deploy</p>
+      <p id="downloadName" style="font-size:1.4rem;font-weight:300;color:#1A3D1C;margin-bottom:4px;">—</p>
+      <p style="font-size:13px;font-style:italic;color:#6B6050;margin-bottom:18px;">Upload this file to your Netlify root, then add a route in _redirects.</p>
+      <button id="downloadBtn" onclick="downloadArtistPage()" class="download-btn" style="margin:0;display:inline-flex;align-items:center;gap:10px;">
+        &#8595;&nbsp; Download Artist Page HTML
+      </button>
+    </div>
+    <a href="partners.html" class="download-btn" style="background:#1A3D1C;">&#8592; Back to Partners</a>
+  </div>
+
+  <!-- STATE: Rejected -->
+  <div class="state" id="stateRejected">
+    <div class="eyebrow">Decision Made</div>
+    <h1>Application<br><em>Rejected.</em></h1>
+    <p class="sub">The artist has been notified that their application was not successful at this time.</p>
+    <div class="notif n-err" style="border-color:var(--red);">&#10007; Rejection email sent to the artist. They may reapply after strengthening their portfolio.</div>
+    <a href="partners.html" class="download-btn" style="background:var(--forest-deep);">&#8592; Back to Partners</a>
+  </div>
+
+</div>
+
+<script>
+/* ── EmailJS credentials ── */
+var SVC  = 'service_fgg2k8a';
+var TPL  = 'template_0nlubc5';   /* scorecard — used for reject notification */
+var PKEY = 'oxPPz9drDF6XpIqwR';
+
+/* ── Read and decode URL params ── */
+function getParams(){
+  var p = new URLSearchParams(window.location.search);
+  var action = p.get('action');
+  var raw    = p.get('data');
+  if(!action || !raw) return null;
+  try{
+    /* Matches the encode in artist-onboarding.html:
+       btoa(unescape(encodeURIComponent(JSON.stringify(data)))) */
+    var d = JSON.parse(decodeURIComponent(atob(raw)));
+    d.action = action;
+    return d;
+  }catch(e){
+    console.error('getParams decode error:', e);
+    return null;
+  }
+}
+
+/* ── Switch visible state panel ── */
+function show(id){
+  document.querySelectorAll('.state').forEach(function(el){
+    el.classList.remove('active');
+  });
+  var el = document.getElementById(id);
+  if(el) el.classList.add('active');
+}
+
+/* ── Populate scorecard and details from decoded data ── */
+function populate(d){
+  var sc      = d.score || 0;
+  var verdict = d.verdict || 'Pending';
+
+  var vbadge = document.getElementById('verdictBadge');
+  if(vbadge){
+    vbadge.textContent = verdict;
+    vbadge.className   = 'badge ' + (sc>=70 ? 'badge-ok' : sc>=45 ? 'badge-rev' : 'badge-bad');
+  }
+
+  var set = function(id,val){ var el=document.getElementById(id); if(el) el.textContent=val; };
+  set('scOverall',   sc);
+  set('scProfile',   d.profile_score  || '—');
+  set('scCraft',     d.craft_score    || '—');
+  set('scPortfolio', d.portfolio_score|| '—');
+  set('scPct',       sc + '%');
+  setTimeout(function(){
+    var bar = document.getElementById('scBar');
+    if(bar) bar.style.width = sc + '%';
+  }, 120);
+
+  set('dName',     d.name     || '—');
+  set('dTitle',    d.title    || '—');
+  set('dLocation', d.location || '—');
+  set('dPhone',    d.phone    || '—');
+  set('dCrafts',   d.crafts   || '—');
+  set('dExp',      d.experience || '—');
+  set('dLineage',  d.lineage  || '—');
+  set('dAwards',   d.awards   || '—');
+  set('dComm',     d.commission || '—');
+  set('dPrice',    d.price    || '—');
+  set('dDate',     d.date     || '—');
+  set('dBio',      d.bio      || '—');
+
+  var emailEl = document.getElementById('dEmail');
+  if(emailEl) emailEl.innerHTML = d.email
+    ? '<a href="mailto:'+d.email+'" style="color:var(--forest);">'+d.email+'</a>'
+    : '—';
+
+  var webEl = document.getElementById('dWebsite');
+  if(webEl) webEl.innerHTML = d.website
+    ? '<a href="'+d.website+'" target="_blank" style="color:var(--forest);">'+d.website+'</a>'
+    : '—';
+
+  /* Artist page preview */
+  set('apBread', d.name || '—');
+  set('apName',  d.name || '—');
+  var catEl = document.getElementById('apCat');
+  if(catEl && d.title) catEl.textContent = d.title + ' · Lahe Lahe Collective';
+  var crafts = d.crafts ? d.crafts.split(', ') : [];
+  set('apCraft', crafts.slice(0,3).join(' · '));
+  set('apBio', d.bio || '—');
+  var ch = document.getElementById('apChips');
+  if(ch){
+    ch.innerHTML = '';
+    crafts.slice(0,4).forEach(function(c){
+      var el = document.createElement('div');
+      el.className = 'ap-chip';
+      el.textContent = c;
+      ch.appendChild(el);
+    });
+  }
+
+  var sub = document.getElementById('reviewSub');
+  if(sub) sub.textContent = 'Reviewing application from ' + d.name + ' submitted on ' + d.date + '.';
+}
+
+/* ── Build artist page HTML for download / email ── */
+function buildArtistPageHTML(d){
+  var crafts=d.crafts?d.crafts.split(', '):[];
+  var chips=crafts.slice(0,5).map(function(c){
+    return '<span style="display:inline-block;padding:4px 12px;border:1px solid rgba(184,134,11,0.25);font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#6b6050;margin:3px;">'+c+'</span>';
+  }).join('');
+  return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+d.name+' — Lahe Lahe Collectives</title></head>'
+    +'<body style="margin:0;padding:0;background:#F5F0E8;font-family:Georgia,serif;">'
+    +'<table width="100%" cellpadding="0" cellspacing="0" style="background:#fff;border-bottom:1px solid rgba(184,134,11,0.15);"><tr><td style="padding:0 60px;height:60px;">'
+    +'<span style="font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.3em;color:#1A3D1C;font-weight:bold;text-transform:uppercase;">Lahe Lahe</span>'
+    +'<span style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.15em;color:#6b6050;text-transform:uppercase;margin-left:32px;">Home</span>'
+    +'<span style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.15em;color:#6b6050;text-transform:uppercase;margin-left:24px;">Artists</span>'
+    +'<span style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.15em;color:#6b6050;text-transform:uppercase;margin-left:24px;">Collections</span>'
+    +'<span style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.15em;color:#6b6050;text-transform:uppercase;margin-left:24px;">Shop</span>'
+    +'</td></tr></table>'
+    +'<table width="100%" cellpadding="0" cellspacing="0" style="background:#EDE6D6;"><tr><td style="padding:8px 60px;font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.15em;color:#6b6050;text-transform:uppercase;">HOME &nbsp;·&nbsp; ARTISTS &nbsp;·&nbsp; '+d.name.toUpperCase()+'</td></tr></table>'
+    +'<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+    +'<td width="280" style="background:#EDE6D6;vertical-align:top;padding:60px 40px;text-align:center;">'
+    +'<div style="width:100px;height:100px;border-radius:50%;background:#c5b99a;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:2.5rem;color:#fff;">'+((d.name||'?')[0].toUpperCase())+'</div>'
+    +'<p style="font-family:Arial,sans-serif;font-size:9px;letter-spacing:0.3em;color:#B8860B;text-transform:uppercase;margin:0 0 4px;">Lahe Lahe Collective</p>'
+    +'<p style="font-family:Georgia,serif;font-size:14px;color:#6b6050;font-style:italic;margin:0;">'+(d.title||'Artist')+'</p>'
+    +'</td>'
+    +'<td style="background:#fff;vertical-align:top;padding:48px 48px;border-left:1px solid rgba(184,134,11,0.15);">'
+    +'<p style="font-family:Arial,sans-serif;font-size:8px;letter-spacing:0.35em;color:#B8860B;text-transform:uppercase;margin:0 0 8px;">Artist · Lahe Lahe Collective</p>'
+    +'<h1 style="font-family:Georgia,serif;font-size:2.4rem;font-weight:300;color:#1A3D1C;margin:0 0 8px;line-height:1.05;">'+d.name+'</h1>'
+    +'<p style="font-family:Arial,sans-serif;font-size:8px;letter-spacing:0.2em;color:#6b6050;text-transform:uppercase;margin:0 0 16px;line-height:1.6;">'+crafts.slice(0,3).join(' · ')+'</p>'
+    +'<p style="font-size:14px;color:#6b6050;line-height:1.8;font-style:italic;margin:0 0 16px;">'+d.bio+'</p>'
+    +'<div>'+chips+'</div>'
+    +'</td></tr></table>'
+    +'<table width="100%" cellpadding="0" cellspacing="0" style="background:#EDE6D6;border-top:1px solid rgba(184,134,11,0.12);border-bottom:1px solid rgba(184,134,11,0.12);"><tr><td style="padding:10px 60px;"><span style="font-family:Arial,sans-serif;font-size:8px;letter-spacing:0.25em;color:#6b6050;text-transform:uppercase;">SELECTED WORKS</span></td></tr></table>'
+    +'<table width="100%" cellpadding="0" cellspacing="0" style="background:#EDE6D6;"><tr>'
+    +'<td width="33%" style="background:#F5F0E8;height:200px;text-align:center;vertical-align:middle;font-size:24px;color:#6b6050;opacity:0.3;">◈</td>'
+    +'<td width="33%" style="background:#EDE6D6;height:200px;text-align:center;vertical-align:middle;font-size:24px;color:#6b6050;opacity:0.3;">◈</td>'
+    +'<td width="33%" style="background:#F5F0E8;height:200px;text-align:center;vertical-align:middle;font-size:24px;color:#6b6050;opacity:0.3;">◈</td>'
+    +'</tr></table>'
+    +'<table width="100%" cellpadding="0" cellspacing="0" style="background:#1A3D1C;"><tr><td style="padding:18px 60px;display:flex;justify-content:space-between;align-items:center;">'
+    +'<span style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.3em;color:#D4A843;text-transform:uppercase;font-weight:bold;">Lahe Lahe</span>'
+    +'<span style="font-family:Arial,sans-serif;font-size:9px;letter-spacing:0.15em;color:rgba(245,240,232,0.4);text-transform:uppercase;float:right;">lahelahe.co.in</span>'
+    +'</td></tr></table>'
+    +'</body></html>';
+}
+
+/* ── Artist data store and HTML cache ── */
+var artistData = null;
+var _htmlCache = null;
+
+/* ── Download artist page as .html file ── */
+function downloadArtistPage(){
+  if(!artistData){
+    alert('No artist data available. Please open this page from the approval email link.');
+    return;
+  }
+  if(!_htmlCache) _htmlCache = buildArtistPageHTML(artistData);
+
+  /* Build safe filename from artist name */
+  var safeName = (artistData.name || 'artist')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9 -]/g, '')
+    .replace(/ +/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+  var filename = safeName + '.html';
+
+  /* Trigger browser download via Blob URL */
+  var blob = new Blob([_htmlCache], {type: 'text/html;charset=utf-8'});
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href     = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+
+  /* Update UI */
+  var btn = document.getElementById('downloadBtn');
+  if(btn){
+    btn.textContent = '✓ Downloaded: ' + filename;
+    btn.style.background = 'var(--forest-deep)';
+    btn.disabled = true;
+  }
+  var dn = document.getElementById('downloadName');
+  if(dn) dn.textContent = filename;
+}
+
+/* ── Approve / Reject handler ── */
+function decide(action){
+  var btnA = document.getElementById('btnApprove');
+  var btnR = document.getElementById('btnReject');
+  if(!btnA || !btnR) return;
+
+  btnA.disabled = true;
+  btnR.disabled = true;
+  btnA.textContent = action === 'approve' ? 'Processing…' : '✓ Approve Artist';
+  btnR.textContent = action === 'reject'  ? 'Processing…' : '✗ Reject Application';
+
+  var errDiv = document.getElementById('decisionErr');
+
+  function resetButtons(){
+    btnA.disabled = false;
+    btnR.disabled = false;
+    btnA.textContent = '✓ Approve Artist';
+    btnR.textContent = '✗ Reject Application';
+  }
+
+  if(action === 'approve'){
+    if(!_htmlCache) _htmlCache = buildArtistPageHTML(artistData);
+
+    var approveParams = {
+      artist_name:      artistData.name,
+      artist_email:     artistData.email,
+      artist_title:     artistData.title || '',
+      decision:         'APPROVED',
+      decision_date:    new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}),
+      artist_page_html: _htmlCache,
+      reply_to:         'lahelahe.connect@gmail.com'
+    };
+
+    emailjs.send(SVC, 'template_8kgfaxp', approveParams)
+      .then(function(){
+        /* Show approved state with download button */
+        show('stateApproved');
+        /* Set filename in approved panel */
+        var safeName = (artistData.name||'artist').toLowerCase().trim()
+          .replace(/[^a-z0-9 -]/g,'').replace(/ +/g,'-')
+          .replace(/-+/g,'-').replace(/^-|-$/g,'');
+        var dn = document.getElementById('downloadName');
+        if(dn) dn.textContent = safeName + '.html';
+        /* Also fire artist notify email — fire and forget */
+        emailjs.send(SVC, TPL, {
+          artist_name:  artistData.name,
+          artist_email: artistData.email,
+          decision:     'APPROVED',
+          message:      'Congratulations! Your application to join the Lahe Lahe Collective has been approved. We will be in touch shortly.',
+          reply_to:     'lahelahe.connect@gmail.com'
+        }).catch(function(){});
+      })
+      .catch(function(err){
+        console.error('Approve email error:', err);
+        if(errDiv){
+          errDiv.style.display = 'flex';
+          errDiv.querySelector('span').textContent =
+            'Could not send email: ' + (err.text || err) +
+            '. Please contact lahelahe.connect@gmail.com directly.';
+        }
+        resetButtons();
+      });
+
+  } else {
+    /* Reject */
+    emailjs.send(SVC, TPL, {
+      artist_name:  artistData.name,
+      artist_email: artistData.email,
+      decision:     'NOT APPROVED',
+      message:      'Thank you for your application to Lahe Lahe Collectives. After careful review, we are unable to proceed at this time. We encourage you to reapply after strengthening your portfolio.',
+      reply_to:     'lahelahe.connect@gmail.com'
+    })
+      .then(function(){ show('stateRejected'); })
+      .catch(function(err){
+        console.error('Reject email error:', err);
+        if(errDiv){
+          errDiv.style.display = 'flex';
+          errDiv.querySelector('span').textContent =
+            'Could not send rejection email: ' + (err.text || err);
+        }
+        resetButtons();
+      });
+  }
+}
+
+/* ── Page init: decode URL, populate, show review panel ── */
+(function init(){
+  var d = getParams();
+
+  if(!d){
+    show('stateInvalid');
+    return;
+  }
+
+  artistData   = d;
+  _htmlCache   = buildArtistPageHTML(d);   /* pre-build so download is instant */
+
+  /* Pre-set filename in download card */
+  var safeName = (d.name||'artist').toLowerCase().trim()
+    .replace(/[^a-z0-9 -]/g,'').replace(/ +/g,'-')
+    .replace(/-+/g,'-').replace(/^-|-$/g,'');
+  var dn = document.getElementById('downloadName');
+  if(dn) dn.textContent = safeName + '.html';
+
+  populate(d);
+  show('stateReview');
+
+  /* Scroll to the relevant action button after render */
+  setTimeout(function(){
+    var targetId = (d.action === 'approve') ? 'btnApprove' : 'btnReject';
+    var btn = document.getElementById(targetId);
+    if(btn) btn.scrollIntoView({behavior:'smooth', block:'center'});
+  }, 500);
+})();
+</script>
+</body>
+</html>

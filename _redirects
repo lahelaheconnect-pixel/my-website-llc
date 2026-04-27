@@ -1,0 +1,53 @@
+# ─────────────────────────────────────────────
+#  Lahe Lahe Collectives — Netlify Redirects
+# ─────────────────────────────────────────────
+
+# --- Favicon & PWA Assets (served as-is, highest priority) ---
+/favicon.ico                  /favicon.ico                              200
+/favicon-32x32.png            /favicon-32x32.png                        200
+/favicon-16x16.png            /favicon-16x16.png                        200
+/apple-touch-icon.png         /apple-touch-icon.png                     200
+/site.webmanifest             /site.webmanifest                         200
+
+# --- Core Pages (clean URL → HTML file) ---
+/                             /index.html                               200
+/home                         /index.html                               301
+
+/artists                      /artists.html                             200
+/artisans                     /artists.html                             301
+
+/collections                  /collections.html                         200
+/collection                   /collections.html                         301
+/shop-collections             /collections.html                         301
+
+/our-story                    /our-story.html                           200
+/story                        /our-story.html                           301
+/about                        /our-story.html                           301
+/mission                      /our-story.html                           301
+/values                       /our-story.html                           301
+/vision                       /our-story.html                           301
+
+/partners                     /partners.html                            200
+/partner                      /partners.html                            301
+/partner-with-us              /partners.html                            301
+/collaborate                  /partners.html                            301
+
+# --- Artist Onboarding & Approval (NEW) ---
+/artist-onboarding            /artist-onboarding.html                   200
+/approval                     /approval.html                            200
+/join                         /artist-onboarding.html                   301
+/join-as-artist               /artist-onboarding.html                   301
+/apply                        /artist-onboarding.html                   301
+/onboarding                   /artist-onboarding.html                   301
+
+# --- Artist Profile Pages ---
+/arunima                      /arunima-chakravarty-khadikar.html        200
+/nandu                        /nandu-s-kumar.html                       200
+/sakshi                       /sakshi-sahu.html                         200
+
+# --- External: Shop ---
+/shop                         https://mydukaan.io/lahe                  301
+/shop/*                       https://mydukaan.io/lahe                  301
+
+# --- External: Social ---
+/instagram                    https://www.instagram.com/lahelahecollectives  301

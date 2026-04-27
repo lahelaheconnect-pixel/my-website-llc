@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artisanal Tote Bags & Traditional Indian Art | Lahe Lahe Collectives</title>
+<meta name="description" content="Shop unique artisanal tote bags featuring master-crafted traditional Indian art. Explore our hand-painted Pattachitra, Madhubani, and Gond art totes on sustainable canvas.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ── Blog dropdown — smooth fade ── */
+.nav-item-blog {
+  position: relative;
+  list-style: none;
+}
+.nav-item-blog > a {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-item-blog > a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.nav-item-blog:hover > a { color: var(--forest); }
+.nav-item-blog:hover > a::after { transform: scaleX(1); }
+
+/* ── Dropdown: opacity fade + slide down (no jarring display:block snap) ── */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px); /* starts 6px up */
+  background: rgba(245, 240, 232, 0.98);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(184, 134, 11, 0.2);
+  border-top: 2px solid var(--gold);
+  list-style: none;
+  min-width: 290px;
+  padding: 8px 0;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+  z-index: 300;
+  /* Hidden state */
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
+}
+
+/* Bridge gap between nav link and dropdown so hover doesn't break */
+.nav-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 0; right: 0;
+  height: 16px;
+}
+
+.nav-item-blog:hover .nav-dropdown,
+.nav-item-blog:focus-within .nav-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0); /* slides into place */
+}
+
+.nav-dropdown li a {
+  display: block;
+  padding: 13px 22px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s, background 0.2s, padding-left 0.2s;
+  white-space: nowrap;
+  border-left: 2px solid transparent;
+}
+.nav-dropdown li a:hover {
+  color: var(--forest-deep);
+  background: rgba(184, 134, 11, 0.06);
+  padding-left: 28px;           /* subtle indent on hover */
+  border-left-color: var(--gold);
+}
+
+/* ── Root Variables ── */
+:root {
+  --cream: #F5F0E8;
+  --cream-dark: #EDE6D6;
+  --forest: #2C5F2E;
+  --forest-deep: #1A3D1C;
+  --forest-light: #4A7C4E;
+  --gold: #B8860B;
+  --gold-light: #D4A843;
+  --gold-pale: #E8D5A0;
+  --ink: #1C1C1C;
+  --text-muted: #6B6050;
+}
+
+/* ── SEO helper ── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', serif;
+  font-size:18px;
+  overflow-x:hidden;
+}
+
+/* ── Custom Cursor ── */
+@media (pointer:fine) {
+  body { cursor: none; }
+  .cursor { display: block; }
+  .cursor-dot { display: block; }
+}
+.cursor {
+  display: none;
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--forest);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.35s cubic-bezier(0.23,1,0.32,1),
+              border-color 0.3s ease,
+              opacity 0.3s ease,
+              width 0.3s ease,
+              height 0.3s ease;
+  mix-blend-mode: multiply;
+}
+.cursor-dot {
+  display: none;
+  width: 5px; height: 5px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+.cursor.is-hovering {
+  width: 56px; height: 56px;
+  border-color: var(--gold);
+  background: rgba(184,134,11,0.06);
+}
+.cursor-dot.is-hovering {
+  background: var(--forest);
+  width: 7px; height: 7px;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 60px;
+}
+nav::before {
+  content:'';position:absolute;inset:0;
+  background:rgba(245,240,232,0.95);
+  backdrop-filter:blur(16px);z-index:-1;
+  border-bottom:1px solid rgba(184,134,11,0.18);
+}
+.nav-logo img { height:40px; width:auto; display:block; }
+.nav-logo-text { font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.3em;color:var(--forest-deep);text-decoration:none;font-weight:500; }
+.nav-links { display:flex;gap:36px;list-style:none; }
+.nav-links a {
+  font-family:'Cinzel',serif;font-size:10px;
+  letter-spacing:0.3em;color:var(--text-muted);
+  text-decoration:none;text-transform:uppercase;
+  position:relative;transition:color 0.3s;
+}
+.nav-links a::after {
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:1px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s ease;
+}
+.nav-links a:hover { color:var(--forest); }
+.nav-links a:hover::after { transform:scaleX(1); }
+
+/* Hamburger */
+.nav-toggle {
+  display:none;
+  flex-direction:column;justify-content:center;gap:5px;
+  width:32px;height:32px;cursor:pointer;
+  background:none;border:none;padding:0;
+}
+.nav-toggle span {
+  display:block;width:100%;height:1.5px;
+  background:var(--forest-deep);
+  transition:all 0.3s ease;
+  transform-origin:center;
+}
+.nav-toggle.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity:0; }
+.nav-toggle.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile nav */
+.nav-mobile {
+  display:none;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:var(--forest-deep);
+  z-index:190;
+  flex-direction:column;justify-content:center;align-items:center;gap:40px;
+  opacity:0;transition:opacity 0.3s ease;
+}
+.nav-mobile.open { opacity:1; }
+.nav-mobile a {
+  font-family:'Cinzel',serif;font-size:14px;
+  letter-spacing:0.4em;color:var(--cream);
+  text-decoration:none;text-transform:uppercase;
+  transition:color 0.3s;
+}
+.nav-mobile a:hover { color:var(--gold-light); }
+
+/* ═══════════════════════════════════
+   HERO — Fix 1: clean two-column grid
+═══════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fix 1: hero-left is now purely a slideshow container, no padding needed */
+.hero-left {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  /* No padding — images fill 100% */
+}
+
+/* Fix 1: remove the gold inset border that was clipping images */
+/* .hero-left::after removed entirely */
+
+/* Fix 2: slideshow wrapper fills the entire left panel */
+.hero-slideshow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Fix 2: gradient overlay at bottom for eyebrow readability */
+.hero-slideshow::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 200px;
+  background: linear-gradient(to top, rgba(10,30,12,0.75), transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Fix 2: individual slides */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.hero-slide.active { opacity: 1; }
+
+/* Fix 2: images fill the panel — object-position prevents clipping heads */
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Per-image object-position to keep subjects in frame */
+.hero-slide:nth-child(1) img { object-position: center center; }   /* beach/landscape */
+.hero-slide:nth-child(2) img { object-position: center 15%; }      /* model upper body */
+.hero-slide:nth-child(3) img { object-position: center 10%; }      /* model full length */
+.hero-slide:nth-child(4) img { object-position: center 20%; }      /* model side profile */
+
+/* Fix 2: eyebrow label floats above the gradient */
+.hero-eyebrow {
+  position: absolute;
+  bottom: 52px;
+  left: 0; right: 0;
+  z-index: 3;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  color: var(--gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  width: 30px; height: 1px;
+  background: rgba(184,134,11,0.5);
+}
+
+/* Fix 2: dot navigation */
+.slide-dots {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 4;
+}
+.slide-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  border: none;
+  padding: 0;
+}
+.slide-dot.active {
+  background: var(--gold-light);
+  transform: scale(1.5);
+}
+
+/* ── Hero Right panel (unchanged) ── */
+.hero-right {
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 60px 80px 56px;
+  position: relative;
+}
+.hero-right::before {
+  content:'';position:absolute;
+  left:0;top:25%;bottom:25%;width:1px;
+  background:linear-gradient(to bottom, transparent, rgba(184,134,11,0.2), transparent);
+}
+.hero-title {
+  font-size:clamp(52px,6vw,96px);
+  font-weight:300;line-height:0.88;
+  color:var(--forest-deep);
+  animation:fadeUp 1.2s ease forwards;
+  opacity:0;transform:translateY(30px);
+}
+.hero-title em { font-style:italic;color:var(--gold);display:block; }
+.hero-tagline {
+  font-size:clamp(15px,1.5vw,20px);font-weight:300;font-style:italic;
+  color:var(--text-muted);letter-spacing:0.08em;margin-top:20px;
+  animation:fadeUp 1.2s 0.2s ease forwards;opacity:0;transform:translateY(20px);
+}
+.hero-divider {
+  width:50px;height:1px;background:var(--gold-pale);margin:28px 0;
+  animation:fadeUp 1.2s 0.35s ease forwards;opacity:0;
+}
+.hero-body {
+  font-size:16px;line-height:1.85;color:var(--text-muted);max-width:400px;
+  animation:fadeUp 1.2s 0.5s ease forwards;opacity:0;transform:translateY(20px);
+}
+.hero-cta {
+  display:flex;gap:20px;margin-top:36px;flex-wrap:wrap;
+  animation:fadeUp 1.2s 0.7s ease forwards;opacity:0;transform:translateY(20px);
+}
+.btn-primary {
+  display:inline-flex;align-items:center;gap:10px;padding:14px 32px;
+  background:var(--forest-deep);color:var(--cream);
+  font-family:'Cinzel',serif;font-size:10px;
+  letter-spacing:0.3em;text-decoration:none;text-transform:uppercase;
+  position:relative;overflow:hidden;transition:color 0.4s;
+}
+.btn-primary::before {
+  content:'';position:absolute;inset:0;background:var(--forest-light);
+  transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease;
+}
+.btn-primary span { position:relative;z-index:1; }
+.btn-primary:hover::before { transform:scaleX(1); }
+.btn-primary:hover { color:var(--gold-light); }
+.btn-ghost {
+  display:inline-flex;align-items:center;gap:10px;padding:14px 0;
+  color:var(--text-muted);font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-style:italic;text-decoration:none;
+  border-bottom:1px solid var(--gold-pale);transition:color 0.3s,border-color 0.3s;
+}
+.btn-ghost:hover { color:var(--forest);border-color:var(--gold); }
+.btn-ghost .arr { transition:transform 0.3s; }
+.btn-ghost:hover .arr { transform:translateX(6px); }
+.scroll-hint {
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--text-muted);
+}
+.scroll-line {
+  width:1px;height:48px;
+  background:linear-gradient(to bottom,var(--gold-pale),transparent);
+  animation:scrollAnim 2s infinite;
+}
+@keyframes scrollAnim {
+  0% { transform:scaleY(0);transform-origin:top;opacity:1; }
+  50% { transform:scaleY(1);transform-origin:top;opacity:1; }
+  100% { transform:scaleY(1);transform-origin:bottom;opacity:0; }
+}
+
+/* ── BAND ── */
+.band {
+  background:var(--forest-deep);padding:20px 0;overflow:hidden;
+  position:relative;
+  border-top:1px solid rgba(184,134,11,0.15);
+  border-bottom:1px solid rgba(184,134,11,0.15);
+}
+.band-track {
+  display:flex;gap:0;animation:bandScroll 30s linear infinite;width:max-content;
+}
+@keyframes bandScroll {
+  from { transform:translateX(0); }
+  to { transform:translateX(-50%); }
+}
+.band-item {
+  display:flex;align-items:center;gap:32px;
+  padding:0 32px;white-space:nowrap;
+  font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:0.35em;color:rgba(245,240,232,0.8);
+}
+.band-dot { width:4px;height:4px;background:var(--gold-light);border-radius:50%;flex-shrink:0; }
+
+/* ── CRAFT SECTION ── */
+.craft-section { padding:120px 60px 100px; background:var(--cream); }
+.section-header {
+  display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;
+  flex-wrap:wrap;gap:16px;
+}
+.section-eyebrow {
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.5em;color:var(--gold);margin-bottom:10px;
+}
+.section-title { font-size:clamp(30px,4vw,52px);font-weight:300;color:var(--forest-deep);line-height:1.1; }
+.section-title em { font-style:italic;color:var(--forest-light); }
+.see-all {
+  font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;
+  color:var(--text-muted);text-decoration:none;
+  border-bottom:1px solid var(--gold-pale);padding-bottom:2px;
+  transition:color 0.3s,border-color 0.3s;white-space:nowrap;
+}
+.see-all:hover { color:var(--forest);border-color:var(--gold); }
+.craft-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:3px; }
+.craft-card { position:relative;overflow:hidden;cursor:pointer; }
+.craft-card-inner {
+  height:460px;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:28px 24px;
+  position:relative;overflow:hidden;
+}
+.craft-bg {
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  transition:transform 0.8s ease;
+}
+.craft-card:hover .craft-bg { transform:scale(1.07); }
+.craft-overlay {
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,25,10,0.9) 0%,rgba(10,25,10,0.2) 55%,transparent 100%);
+}
+.craft-content { position:relative;z-index:2; }
+.craft-region { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--gold-light);margin-bottom:8px; }
+.craft-name { font-size:28px;font-weight:300;color:var(--cream);line-height:1.1; }
+.craft-name em { display:block;font-style:italic;font-size:0.8em;color:var(--gold-pale); }
+.craft-desc {
+  font-size:13px;color:rgba(245,240,232,0.65);line-height:1.6;margin-top:8px;max-width:220px;
+  opacity:0;transform:translateY(8px);transition:all 0.45s ease;
+}
+.craft-card:hover .craft-desc { opacity:1;transform:translateY(0); }
+.craft-pill {
+  display:inline-block;margin-top:14px;padding:5px 14px;
+  border:1px solid rgba(184,134,11,0.5);color:var(--gold-light);
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;
+  opacity:0;transform:translateY(8px);transition:all 0.45s ease 0.05s;
+}
+.craft-card:hover .craft-pill { opacity:1;transform:translateY(0); }
+
+.bg-pattachitra { background:linear-gradient(160deg,#4A1800 0%,#B85010 40%,#1A3D1C 100%); }
+.bg-madhubani   { background:linear-gradient(160deg,#1A3D1C 0%,#2C6030 40%,#5C3010 100%); }
+.bg-kalamkari   { background:linear-gradient(160deg,#2C1808 0%,#7A3A18 40%,#2A4A18 100%); }
+.bg-gond        { background:linear-gradient(160deg,#0C1C3A 0%,#1A3A6A 40%,#2C5F2E 100%); }
+
+/* ── ARTISAN BRIDGE ── */
+.bridge-section {
+  background:var(--forest-deep);padding:120px 60px;position:relative;overflow:hidden;
+}
+.bridge-section::before {
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 50% 70% at 15% 50%,rgba(74,124,78,0.15) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 60% at 85% 50%,rgba(184,134,11,0.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.bridge-inner {
+  display:grid;grid-template-columns:1fr 1.3fr;
+  gap:80px;align-items:center;position:relative;z-index:1;
+}
+.bridge-eyebrow { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.5em;color:var(--gold-light);margin-bottom:16px; }
+.bridge-title { font-size:clamp(30px,4vw,56px);font-weight:300;color:var(--cream);line-height:1.05;margin-bottom:24px; }
+.bridge-title em { font-style:italic;color:var(--gold-light); }
+.bridge-body { font-size:16px;color:rgba(245,240,232,0.6);line-height:1.85;max-width:400px;margin-bottom:36px; }
+.tote-back-wrap { position:relative;display:flex;justify-content:center; }
+.tote-back-wrap img { width:70%;filter:drop-shadow(0 30px 50px rgba(0,0,0,0.5)); }
+.tote-back-caption {
+  position:absolute;bottom:-18px;
+  background:rgba(184,134,11,0.12);border:1px solid rgba(184,134,11,0.25);
+  padding:12px 18px;font-family:'Cinzel',serif;font-size:8px;
+  letter-spacing:0.3em;color:var(--gold-light);text-align:center;
+}
+.bridge-steps { display:flex;flex-direction:column;gap:0; }
+.bridge-step {
+  display:flex;gap:20px;align-items:flex-start;padding:24px 28px;
+  border:1px solid rgba(184,134,11,0.08);border-bottom:none;
+  position:relative;overflow:hidden;transition:background 0.4s;
+}
+.bridge-step:last-child { border-bottom:1px solid rgba(184,134,11,0.08); }
+.bridge-step::before {
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--gold);transform:scaleY(0);transform-origin:top;transition:transform 0.4s ease;
+}
+.bridge-step:hover { background:rgba(255,255,255,0.05); }
+.bridge-step:hover::before { transform:scaleY(1); }
+.step-num { font-size:40px;font-weight:300;color:rgba(184,134,11,0.2);line-height:1;min-width:32px; }
+.step-body .step-title { font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:var(--gold-light);margin-bottom:8px; }
+.step-body .step-desc { font-size:14px;color:rgba(245,240,232,0.55);line-height:1.65; }
+
+/* ── FOOTER ── */
+footer { background:var(--forest-deep);padding:72px 60px 32px;position:relative; }
+footer::before {
+  content:'';position:absolute;top:0;left:60px;right:60px;height:1px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+}
+.footer-grid {
+  display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;
+  padding-bottom:48px;border-bottom:1px solid rgba(184,134,11,0.12);margin-bottom:32px;
+}
+.footer-logo img { height:44px;width:auto;margin-bottom:14px;opacity:0.9;filter:brightness(1.8) saturate(0.8); }
+.footer-logo-text { font-family:'Cinzel',serif;font-size:16px;letter-spacing:0.25em;color:var(--cream);opacity:0.9;margin-bottom:14px;display:block;text-decoration:none; }
+.footer-tagline { font-style:italic;font-size:16px;color:var(--gold-light);margin-bottom:14px; }
+.footer-desc { font-size:14px;color:rgba(245,240,232,0.4);line-height:1.8;max-width:300px; }
+.footer-col-title { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.5em;color:var(--gold-light);margin-bottom:20px; }
+.footer-links { list-style:none;display:flex;flex-direction:column;gap:12px; }
+.footer-links a { color:rgba(245,240,232,0.45);font-size:15px;text-decoration:none;letter-spacing:0.03em;transition:color 0.3s; }
+.footer-links a:hover { color:var(--gold-light); }
+.footer-bottom {
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  font-size:12px;color:rgba(245,240,232,0.28);letter-spacing:0.1em;
+}
+.footer-social { display:flex;gap:24px; }
+.footer-social a { color:rgba(245,240,232,0.35);font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;text-decoration:none;transition:color 0.3s; }
+.footer-social a:hover { color:var(--gold-light); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { to { opacity:1;transform:translateY(0); } }
+.reveal { opacity:0;transform:translateY(36px);transition:all 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity:1;transform:translateY(0); }
+
+/* ════════════════════════════════════
+   TABLET — max-width: 1024px
+════════════════════════════════════ */
+@media (max-width:1024px) {
+  nav { padding:16px 36px; }
+  .nav-links { gap:24px; }
+  .hero { grid-template-columns:1fr 1fr; }
+  .hero-right { padding:100px 40px 60px 36px; }
+  .craft-section { padding:100px 36px 80px; }
+  .craft-grid { grid-template-columns:repeat(2,1fr); }
+  .craft-card-inner { height:400px; }
+  .bridge-section { padding:100px 36px; }
+  .bridge-inner { gap:50px; }
+  footer { padding:60px 36px 28px; }
+  footer::before { left:36px;right:36px; }
+  .footer-grid { grid-template-columns:1fr 1fr;gap:40px; }
+  .footer-grid > div:first-child { grid-column:1/-1; }
+}
+
+/* ════════════════════════════════════
+   MOBILE — max-width: 768px
+════════════════════════════════════ */
+@media (max-width:768px) {
+  nav { padding:14px 20px; }
+  .nav-links { display:none; }
+  .nav-toggle { display:flex; }
+
+  /* Hero stacked */
+/* FIX — taller panel, portrait-safe crop points */
+.hero {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  min-height: auto;
+}
+.hero-left {
+  min-height: 100vw;   /* Square-ish on portrait phones — enough room for full figures */
+  max-height: 100vw;   /* Cap at same value to keep it consistent */
+}
+
+/* Mobile-specific object-position overrides */
+/* img1: beach landscape — center is fine */
+.hero-slide:nth-child(1) img { object-position: center center; }
+
+/* img2: model upper body — shift up more on narrow screens */
+.hero-slide:nth-child(2) img { object-position: center 8%; }
+
+/* img3: model full length with floral bg — more headroom needed */
+.hero-slide:nth-child(3) img { object-position: center 5%; }
+
+/* img4: side profile outdoor — slight upward shift */
+.hero-slide:nth-child(4) img { object-position: center 12%; }
+
+.hero-eyebrow { font-size: 8px; letter-spacing: 0.3em; bottom: 44px; }
+.slide-dots { bottom: 18px; }
+
+  .hero-right {
+    padding: 48px 24px 60px;
+    min-height: auto;
+  }
+  .hero-right::before { display:none; }
+  .hero-title { font-size:clamp(44px,12vw,64px); }
+  .hero-tagline { font-size:16px; }
+  .hero-body { font-size:15px;max-width:100%; }
+  .hero-cta { flex-direction:column;gap:16px; }
+  .btn-primary { justify-content:center;padding:16px 28px; }
+  .scroll-hint { display:none; }
+
+  .band { padding:16px 0; }
+  .band-item { font-size:8px;gap:24px;padding:0 24px; }
+
+  .craft-section { padding:72px 20px 64px; }
+  .section-header { flex-direction:column;align-items:flex-start;gap:12px; }
+  .craft-grid { grid-template-columns:1fr 1fr;gap:2px; }
+  .craft-card-inner { height:300px;padding:20px 16px; }
+  .craft-name { font-size:22px; }
+  .craft-region { font-size:8px; }
+  .craft-desc { opacity:1;transform:translateY(0);font-size:12px; }
+  .craft-pill { opacity:1;transform:translateY(0); }
+
+  .bridge-section { padding:72px 20px; }
+  .bridge-inner { grid-template-columns:1fr; gap:56px; }
+  .bridge-title { font-size:clamp(28px,8vw,40px); }
+  .bridge-body { font-size:15px;max-width:100%; }
+  .tote-back-wrap img { width:60%; }
+  .bridge-step { padding:20px; }
+  .step-num { font-size:32px; }
+  .step-body .step-desc { font-size:13px; }
+
+  footer { padding:56px 20px 28px; }
+  footer::before { left:20px;right:20px; }
+  .footer-grid { grid-template-columns:1fr;gap:36px; }
+  .footer-grid > div:first-child { grid-column:auto; }
+  .footer-bottom { flex-direction:column;align-items:flex-start;gap:16px; }
+}
+
+/* ════════════════════════════════════
+   SMALL MOBILE — max-width: 420px
+════════════════════════════════════ */
+@media (max-width:420px) {
+  .craft-grid { grid-template-columns:1fr; }
+  .craft-card-inner { height:280px; }
+  .hero-left { min-height: 55vw; }
+  .hero-title { font-size:clamp(38px,13vw,56px); }
+  .tote-back-wrap img { width:75%; }
+  
+  .hero-left {
+  min-height: 110vw;  /* Extra height for very narrow screens */
+  max-height: 110vw;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo-text">Lahe Lahe</a>
+  <ul class="nav-links">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="artists.html">Artisans</a></li>
+    <li><a href="our-story.html">Our Story</a></li>
+    <li><a href="partners.html">Partner</a></li>
+    <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+    <li class="nav-item-blog">
+      <a href="">Journal</a>
+      <ul class="nav-dropdown">
+        <li><a href="lahe-lahe-blog-post-01.html">01 · Where Trees Become Tradition</a></li>
+        <li><a href="lahe-lahe-blog-post-02.html">02 · When Rabindranath Met Pattachitra</a></li>
+      </ul>
+    </li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="nav-mobile" id="navMobile">
+  <a href="collections.html" onclick="closeNav()">Collections</a>
+  <a href="artists.html" onclick="closeNav()">Artisans</a>
+  <a href="our-story.html" onclick="closeNav()">Our Story</a>
+  <a href="partners.html" onclick="closeNav()">Partner</a>
+  <a href="https://lahelahe.co.in/shop" target="_blank" onclick="closeNav()">Shop</a>
+  <a href="lahe-lahe-blog-post-01.html" onclick="closeNav()">Journal — Post 01</a>
+  <a href="lahe-lahe-blog-post-02.html" onclick="closeNav()">Journal — Post 02</a>
+</div>
+
+<!-- ═══════════════════════════
+     HERO — Fix 3: new HTML
+═══════════════════════════ -->
+<section class="hero">
+
+  <!-- LEFT: full-bleed image slideshow -->
+  <div class="hero-left">
+    <div class="hero-slideshow">
+
+		  <!-- Slide 1 — beach/sunset lifestyle shot -->
+		 <div class="hero-slide active">
+	  <img src="img1.png" alt="Hand-painted Pattachitra artisanal tote bag at a beach — Traditional Indian art on sustainable canvas by Lahe Lahe Collectives"/>
+	</div>
+
+	<div class="hero-slide">
+	  <img src="img2.png" alt="Model carrying a Gond art artisanal tote bag — Sustainable fashion featuring traditional tribal Indian art"/>
+	</div>
+
+	<div class="hero-slide">
+	  <img src="img3.png" alt="Hand-painted Kerala Mural traditional Indian art tote bag for everyday utility — Lahe Lahe Collectives"/>
+	</div>
+
+	<div class="hero-slide">
+	  <img src="img4.png" alt="Artisanal tote bag with Pattachitra folk art — Master-crafted Indian heritage painting on durable canvas bags"/>
+	</div>
+		</div><!-- /.hero-slideshow -->
+
+    <!-- Dot navigation -->
+    <div class="slide-dots" id="slideDots" role="tablist" aria-label="Slideshow navigation">
+      <button class="slide-dot active" onclick="goToSlide(0)" aria-label="Slide 1"></button>
+      <button class="slide-dot" onclick="goToSlide(1)" aria-label="Slide 2"></button>
+      <button class="slide-dot" onclick="goToSlide(2)" aria-label="Slide 3"></button>
+      <button class="slide-dot" onclick="goToSlide(3)" aria-label="Slide 4"></button>
+    </div>
+
+    <!-- Eyebrow label over gradient -->
+    <div class="hero-eyebrow">Artisan Collective &nbsp;&middot;&nbsp; Est. India</div>
+
+  </div><!-- /.hero-left -->
+
+  <!-- RIGHT: text content panel (unchanged) -->
+ <div class="hero-right">
+  <h1 class="hero-title">Artisanal <em>Tote Bags</em></h1>
+  <p class="hero-tagline">Traditional Indian Art. The Art of Pause.</p>
+  <div class="hero-divider"></div>
+  <p class="hero-body">A Creative Collective bridging India's master artisans with modern utility. Every hand-painted tote bag carries a story of heritage craft centuries in the making.</p>
+  </div>
+    <div class="hero-cta">
+      <a href="https://lahelahe.co.in/shop" target="_blank" class="btn-primary"><span>Explore Collection</span></a>
+      <a href="artists.html" class="btn-ghost">Meet the Artisans <span class="arr">&rarr;</span></a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+
+</section>
+
+<!-- BAND -->
+<div class="band">
+  <div class="band-track">
+    <div class="band-item"><div class="band-dot"></div>100% Hand-Painted</div>
+    <div class="band-item"><div class="band-dot"></div>Digital Artisan Bridge</div>
+    <div class="band-item"><div class="band-dot"></div>MSME Registered Collective</div>
+    <div class="band-item"><div class="band-dot"></div>QR Traced Supply Chain</div>
+    <div class="band-item"><div class="band-dot"></div>Heritage Craft Traditions</div>
+    <div class="band-item"><div class="band-dot"></div>45+ Hours Per Piece</div>
+    <div class="band-item"><div class="band-dot"></div>Earth-Derived Pigments</div>
+    <div class="band-item"><div class="band-dot"></div>Ethically Sourced Canvas</div>
+    <div class="band-item"><div class="band-dot"></div>100% Hand-Painted</div>
+    <div class="band-item"><div class="band-dot"></div>Digital Artisan Bridge</div>
+    <div class="band-item"><div class="band-dot"></div>MSME Registered Collective</div>
+    <div class="band-item"><div class="band-dot"></div>QR Traced Supply Chain</div>
+    <div class="band-item"><div class="band-dot"></div>Heritage Craft Traditions</div>
+    <div class="band-item"><div class="band-dot"></div>45+ Hours Per Piece</div>
+    <div class="band-item"><div class="band-dot"></div>Earth-Derived Pigments</div>
+    <div class="band-item"><div class="band-dot"></div>Ethically Sourced Canvas</div>
+  </div>
+</div>
+
+<!-- CRAFT COLLECTIONS -->
+<section class="craft-section" id="collections">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Signature Collections</div>
+      <h2 class="section-title">Master-Craft Utility: <em>Indian Heritage Painting on Totes</em></h2>
+    </div>
+    <a href="https://lahelahe.co.in/shop" target="_blank" class="see-all">View all collections &rarr;</a>
+  </div>
+  <div class="craft-grid">
+
+    <div class="craft-card reveal">
+      <div class="craft-card-inner">
+        <div class="craft-bg bg-pattachitra">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.08" viewBox="0 0 300 480" preserveAspectRatio="xMidYMid slice">
+            <circle cx="150" cy="240" r="160" fill="none" stroke="white" stroke-width="1"/>
+            <circle cx="150" cy="240" r="120" fill="none" stroke="white" stroke-width="0.5"/>
+            <circle cx="150" cy="240" r="80" fill="none" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="240" x2="300" y2="240" stroke="white" stroke-width="0.5"/>
+            <line x1="150" y1="0" x2="150" y2="480" stroke="white" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="craft-overlay"></div>
+        <div class="craft-content">
+          <div class="craft-region">Odisha &middot; 1000+ Years</div>
+          <div class="craft-name">Pattachitra</em></div>
+          <p class="craft-desc">Ancient scroll painting capturing mythology, devotion &amp; the natural world.</p>
+          <div class="craft-pill">Explore &rarr;</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="craft-card reveal" style="transition-delay:0.08s">
+      <div class="craft-card-inner">
+        <div class="craft-bg bg-madhubani">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.08" viewBox="0 0 300 480" preserveAspectRatio="xMidYMid slice">
+            <rect x="20" y="20" width="260" height="440" fill="none" stroke="white" stroke-width="1"/>
+            <rect x="40" y="40" width="220" height="400" fill="none" stroke="white" stroke-width="0.5"/>
+            <line x1="20" y1="240" x2="280" y2="240" stroke="white" stroke-width="0.4"/>
+            <line x1="150" y1="20" x2="150" y2="460" stroke="white" stroke-width="0.4"/>
+            <circle cx="150" cy="240" r="60" fill="none" stroke="white" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="craft-overlay"></div>
+        <div class="craft-content">
+          <div class="craft-region">Bihar &middot; 2500+ Years</div>
+          <div class="craft-name">Madhubani</em></div>
+          <p class="craft-desc">Geometric folk art from Mithila &mdash; myths and nature in vibrant lines.</p>
+          <div class="craft-pill">Explore &rarr;</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="craft-card reveal" style="transition-delay:0.16s">
+      <div class="craft-card-inner">
+        <div class="craft-bg bg-kalamkari">
+                 <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.08" viewBox="0 0 300 480" preserveAspectRatio="xMidYMid slice">
+            <circle cx="150" cy="240" r="160" fill="none" stroke="white" stroke-width="1"/>
+            <circle cx="150" cy="240" r="120" fill="none" stroke="white" stroke-width="0.5"/>
+            <circle cx="150" cy="240" r="80" fill="none" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="240" x2="300" y2="240" stroke="white" stroke-width="0.5"/>
+            <line x1="150" y1="0" x2="150" y2="480" stroke="white" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="craft-overlay"></div>
+        <div class="craft-content">
+          <div class="craft-region">Kerala &middot; 1200+ Years</div>
+          <div class="craft-name">Kerala Mural</em></div>
+          <p class="craft-desc"> Mythology on temple and palace walls using natural pigments  &mdash; Panchavarna palette, traditionally derived from natural mineral and plant sources.</p>
+          <div class="craft-pill">Explore &rarr;</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="craft-card reveal" style="transition-delay:0.24s">
+      <div class="craft-card-inner">
+        <div class="craft-bg bg-gond">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.08" viewBox="0 0 300 480" preserveAspectRatio="xMidYMid slice">
+            <circle cx="80" cy="120" r="50" fill="none" stroke="white" stroke-width="0.8"/>
+            <circle cx="220" cy="200" r="70" fill="none" stroke="white" stroke-width="0.8"/>
+            <circle cx="120" cy="360" r="60" fill="none" stroke="white" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="craft-overlay"></div>
+        <div class="craft-content">
+          <div class="craft-region">Madhya Pradesh &middot; Tribal Heritage</div>
+          <div class="craft-name">Gond Art</em></div>
+          <p class="craft-desc">Vibrant tribal imagery &mdash; nature, animals &amp; spirits in dot-and-line.</p>
+          <div class="craft-pill">Explore &rarr;</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ARTISAN BRIDGE -->
+<section class="bridge-section" id="artisan-bridge">
+  <div class="bridge-inner">
+    <div class="reveal">
+      <div class="bridge-eyebrow">The Digital Artisan Bridge</div>
+      <h2 class="bridge-title">Every Tote Tells a <em>Living Story</em></h2>
+      <p class="bridge-body">Scan the QR code on the back of any Lahe Lahe tote to meet the artisan who painted it — their name, village, craft tradition, and the time they devoted to your piece.</p>
+      <div class="tote-back-wrap">
+        <img src="img5.png" alt="Back of Lahe Lahe tote showing Digital Artisan Bridge QR code"/>
+        <div class="tote-back-caption">The Artisan Bridge &mdash; Back of Tote</div>
+      </div>
+    </div>
+    <div class="bridge-steps reveal" style="transition-delay:0.2s">
+      <div class="bridge-step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <div class="step-title">The Artisan Creates</div>
+          <div class="step-desc">Master craftspeople from rural Odisha, Bihar &amp; Andhra Pradesh hand-paint each piece using centuries-old techniques &mdash; no machines, no prints, no shortcuts.</div>
+        </div>
+      </div>
+      <div class="bridge-step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <div class="step-title">We Curate &amp; Document</div>
+          <div class="step-desc">Each creation is catalogued with the artisan's name, village, tradition, and story &mdash; then embedded as a QR code on the back of every tote.</div>
+        </div>
+      </div>
+      <div class="bridge-step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <div class="step-title">You Connect &amp; Carry</div>
+          <div class="step-desc">Scan the QR to meet the hands that made your piece. Your purchase directly funds their workshop, skill development, and community.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><a href="index.html" class="footer-logo-text">Lahe Lahe Collectives</a></div>
+      <div class="footer-tagline">The Art of Pause.</div>
+      <p class="footer-desc">A curated ecosystem connecting India's master artisans with those who believe in the irreplaceable value of slow, deliberate creation.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Explore</div>
+      <ul class="footer-links">
+        <li><a href="#">Pattachitra Collection</a></li>
+        <li><a href="#">Madhubani Collection</a></li>
+        <li><a href="#">Kerala Mural Collection</a></li>
+        <li><a href="#">Gond Art Collection</a></li>
+        <li><a href="#">Gift a Tradition</a></li>
+        <li><a href="#">Custom Orders</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <ul class="footer-links">
+        <li><a href="our-story.html">Our Story</a></li>
+        <li><a href="artists.html">Meet the Artisans</a></li>
+        <li><a href="partners.html">Partner With Us</a></li>
+        <li style="margin-top: 8px;">
+          <span style="font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;">Journal</span>
+        </li>
+        <li><a href="lahe-lahe-blog-post-01.html">01 · Where Trees Become Tradition</a></li>
+        <li><a href="lahe-lahe-blog-post-02.html">02 · When Rabindranath Met Pattachitra</a></li>
+        <li><a href="mailto:lahelahe.connect@gmail.com">lahelahe.connect@gmail.com</a></li>
+        <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Lahe Lahe Collectives &nbsp;&middot;&nbsp; MSME Registered &nbsp;&middot;&nbsp; Est. India</span>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/lahelahecollectives" target="_blank">Instagram</a>
+      <a href="https://www.instagram.com/lahelahecollectives" target="_blank">@lahelahecollectives</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════
+     SCRIPTS
+═══════════════════════════════ -->
+<script>
+// ── Custom cursor (desktop only) ──
+const cursor = document.getElementById('cursor');
+const dot = document.getElementById('cursorDot');
+let mx = 0, my = 0, cx = 0, cy = 0;
+
+// Dot snaps exactly to mouse — feels precise
+document.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+  dot.style.left = mx + 'px';
+  dot.style.top  = my + 'px';
+});
+
+// Ring follows with lerp — feels weighted/alive
+(function animateCursor() {
+  cx += (mx - cx) * 0.12;
+  cy += (my - cy) * 0.12;
+  cursor.style.left = cx + 'px';
+  cursor.style.top  = cy + 'px';
+  requestAnimationFrame(animateCursor);
+})();
+
+// Hover state — class toggle (not inline transform)
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.classList.add('is-hovering');
+    dot.classList.add('is-hovering');
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.classList.remove('is-hovering');
+    dot.classList.remove('is-hovering');
+  });
+});
+
+// Hide cursor when mouse leaves viewport
+document.addEventListener('mouseleave', () => {
+  cursor.style.opacity = '0';
+  dot.style.opacity = '0';
+});
+document.addEventListener('mouseenter', () => {
+  cursor.style.opacity = '1';
+  dot.style.opacity = '1';
+});
+
+// ── Mobile nav ──
+const toggle = document.getElementById('navToggle');
+const mobileNav = document.getElementById('navMobile');
+function closeNav(){
+  toggle.classList.remove('open');
+  mobileNav.style.display='none';
+  mobileNav.classList.remove('open');
+}
+toggle.addEventListener('click',()=>{
+  const isOpen = toggle.classList.contains('open');
+  if(isOpen){ closeNav(); }
+  else {
+    toggle.classList.add('open');
+    mobileNav.style.display='flex';
+    setTimeout(()=>mobileNav.classList.add('open'),10);
+  }
+});
+
+// ── Fix 4: Hero Slideshow ──
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.slide-dot');
+
+function goToSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = n;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+}
+
+function nextSlide() {
+  goToSlide((currentSlide + 1) % slides.length);
+}
+
+// Auto-advance every 4.5 seconds
+let autoplay = setInterval(nextSlide, 4500);
+
+// Pause on hover, resume on leave
+const heroLeft = document.querySelector('.hero-left');
+heroLeft.addEventListener('mouseenter', () => clearInterval(autoplay));
+heroLeft.addEventListener('mouseleave', () => {
+  autoplay = setInterval(nextSlide, 4500);
+});
+
+// ── Scroll reveal ──
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

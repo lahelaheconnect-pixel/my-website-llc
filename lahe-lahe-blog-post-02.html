@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>When Rabindranath Met Pattachitra — Lahe Lahe Collectives Journal</title>
+  <meta name="description" content="A childhood spent humming Rabindranath Thakur's songs. A tradition 1,000 years old. How one painting became the meeting place of two eternities — by Arunima Chakravarty Khadikkar."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --saffron: #D4621A;
+      --temple-gold: #C8900A;
+      --deep-black: #120C04;
+      --parchment: #F5EDD6;
+      --warm-cream: #FAF4E8;
+      --burnt-sienna: #7A3B10;
+      --forest-green: #1E4010;
+      --krishna-blue: #1B4F8A;
+      --lotus-pink: #C0607A;
+      --border-pattern: repeating-linear-gradient(
+        90deg,
+        var(--saffron) 0px, var(--saffron) 8px,
+        var(--temple-gold) 8px, var(--temple-gold) 16px,
+        var(--forest-green) 16px, var(--forest-green) 24px,
+        var(--krishna-blue) 24px, var(--krishna-blue) 32px,
+        var(--temple-gold) 32px, var(--temple-gold) 40px
+      );
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--warm-cream);
+      color: var(--deep-black);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: var(--parchment);
+      border-bottom: 3px solid var(--deep-black);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--deep-black);
+      text-decoration: none;
+    }
+    .site-logo span { color: var(--saffron); }
+    .header-nav {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--burnt-sienna);
+    }
+
+    .border-strip {
+      height: 8px;
+      background: var(--border-pattern);
+    }
+
+    /* HERO — full-width painting with overlaid text */
+    .hero-painting {
+      position: relative;
+      width: 100%;
+      max-height: 88vh;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeIn 1.2s ease 0.1s forwards;
+    }
+
+    .hero-painting img {
+      width: 100%;
+      height: 88vh;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: brightness(0.82);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(12, 6, 0, 0.78) 0%,
+        rgba(12, 6, 0, 0.3) 50%,
+        transparent 100%
+      );
+    }
+
+    .hero-text {
+      position: absolute;
+      top: 50%;
+      left: 60px;
+      transform: translateY(-50%);
+      max-width: 480px;
+    }
+
+    .post-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--temple-gold);
+      opacity: 0.35;
+      letter-spacing: -0.02em;
+      margin-bottom: -10px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--lotus-pink);
+      border-left: 3px solid var(--lotus-pink);
+      padding-left: 12px;
+      margin-bottom: 20px;
+    }
+
+    .hero-text h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.4rem;
+      font-weight: 400;
+      line-height: 1.1;
+      color: #FFF8EE;
+      margin-bottom: 20px;
+    }
+
+    .hero-text h1 em {
+      color: var(--temple-gold);
+      font-style: italic;
+    }
+
+    .hero-tagline {
+      font-size: 0.95rem;
+      color: #D4C4A0;
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 28px;
+    }
+
+    .hero-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-author-photo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--temple-gold);
+    }
+
+    .hero-author-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #FFF8EE;
+    }
+
+    .hero-author-role {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--temple-gold);
+    }
+
+    .hero-date {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #888;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* ARTICLE */
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 70px 60px 80px;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.5s forwards;
+    }
+
+    .article-body p {
+      font-size: 1.05rem;
+      line-height: 1.95;
+      color: #2a1808;
+      margin-bottom: 1.8em;
+    }
+
+    .article-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--deep-black);
+      margin: 2.5em 0 0.8em;
+      line-height: 1.2;
+    }
+
+    .article-body h2 em { color: var(--saffron); font-style: italic; }
+
+    .ornament {
+      text-align: center;
+      margin: 40px auto;
+      color: var(--temple-gold);
+      font-size: 1.1rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      border-left: 4px solid var(--temple-gold);
+      margin: 2.5em 0;
+      padding: 20px 30px;
+      background: var(--parchment);
+      position: relative;
+    }
+    .pull-quote::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      color: var(--temple-gold);
+      opacity: 0.2;
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      line-height: 1;
+    }
+    .pull-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--burnt-sienna);
+      line-height: 1.55;
+      margin: 0 !important;
+    }
+
+    /* PAINTING INSET */
+    .painting-inset {
+      margin: 3em -60px;
+      position: relative;
+    }
+    .painting-inset::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      background: var(--border-pattern);
+      z-index: 0;
+    }
+    .painting-inset::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      background: var(--deep-black);
+      z-index: 1;
+    }
+    .painting-inset img {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: block;
+      max-height: 600px;
+      object-fit: cover;
+      object-position: center;
+    }
+    .painting-caption {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #888;
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    /* SONG BLOCK */
+    .song-block {
+      background: var(--deep-black);
+      color: var(--parchment);
+      padding: 60px 70px;
+      margin: 3em -60px;
+      position: relative;
+      text-align: center;
+    }
+    .song-block::before, .song-block::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 8px;
+      background: var(--border-pattern);
+    }
+    .song-block::before { top: 0; }
+    .song-block::after { bottom: 0; }
+
+    .song-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--temple-gold);
+      margin-bottom: 8px;
+    }
+
+    .song-attribution {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--lotus-pink);
+      letter-spacing: 0.05em;
+      margin-bottom: 36px;
+    }
+
+    .song-lines {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 2.2;
+      color: #EDE0C0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .song-lines span {
+      display: block;
+    }
+
+    /* CRAFT DETAILS */
+    .craft-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--deep-black);
+      margin: 3em 0;
+    }
+    .craft-detail-item {
+      padding: 26px 30px;
+      border-right: 2px solid var(--deep-black);
+      border-bottom: 2px solid var(--deep-black);
+    }
+    .craft-detail-item:nth-child(even) { border-right: none; }
+    .craft-detail-item:nth-last-child(-n+2) { border-bottom: none; }
+    .craft-detail-label {
+      font-size: 0.64rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--saffron);
+      margin-bottom: 6px;
+    }
+    .craft-detail-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--deep-black);
+      line-height: 1.4;
+    }
+
+    /* AUTHOR CARD */
+    .author-card {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 32px 36px;
+      border: 2px solid var(--deep-black);
+      background: var(--parchment);
+      margin-top: 4em;
+    }
+    .author-card-photo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--temple-gold);
+      flex-shrink: 0;
+    }
+    .author-card-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--saffron);
+      margin-bottom: 6px;
+    }
+    .author-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--deep-black);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .author-card-bio {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.7;
+      margin: 0 !important;
+    }
+
+    /* CTA */
+    .cta-block {
+      text-align: center;
+      padding: 60px 40px;
+      background: var(--parchment);
+      border: 2px solid var(--deep-black);
+      margin-top: 3em;
+      position: relative;
+    }
+    .cta-block::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px dashed var(--temple-gold);
+      pointer-events: none;
+    }
+    .cta-block h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .cta-block p {
+      font-size: 0.9rem;
+      color: #666;
+      max-width: 420px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--deep-black);
+      color: var(--parchment);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--saffron); }
+
+    /* FOOTER */
+    .post-footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #ddd;
+    }
+    .post-footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+    }
+    .post-footer-links {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--burnt-sienna);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .site-header { padding: 16px 24px; }
+      .hero-painting img { height: 70vh; object-position: 60% top; }
+      .hero-text { left: 24px; right: 24px; max-width: 100%; }
+      .hero-text h1 { font-size: 2.2rem; }
+      .post-number { font-size: 4rem; }
+      .article-body { padding: 50px 24px 60px; }
+      .painting-inset { margin: 3em -24px; }
+      .song-block { padding: 40px 24px; margin: 3em -24px; }
+      .craft-details { grid-template-columns: 1fr; }
+      .craft-detail-item { border-right: none !important; }
+      .author-card { flex-direction: column; text-align: center; }
+      .post-footer { padding: 30px 24px; flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" class="site-logo">Lahe <span>Lahe</span> Collectives</a>
+    <nav class="header-nav">Journal · Stories from the Craft</nav>
+  </header>
+
+  <div class="border-strip"></div>
+
+  <!-- HERO — painting as full-width background -->
+  <section class="hero-painting">
+    <img src="WhatsApp Image 2026-04-22 at 23.47.08.jpeg"
+         alt="Pattachitra painting of Krishna playing the flute beside Radha and Tagore — by Arunima Chakravarty Khadikkar for Lahe Lahe Collectives"/>
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <div class="post-number">02</div>
+      <div class="post-tag">Artisan Stories · Pattachitra · Rabindra Sangeet</div>
+      <h1>When <em>Rabindranath</em><br/>Met Pattachitra</h1>
+      <p class="hero-tagline">
+        Having grown up softly humming the songs of Kobiguru, my imagination was always set alight. Drawn by the vivid, breathing colours of Pattachitra, that imagination slowly found form.
+      </p>
+      <div class="hero-author">
+        <img src="Arunima Chakravarty.jpg" alt="Arunima Chakravarty Khadikkar" class="hero-author-photo"/>
+        <div>
+          <div class="hero-author-name">Arunima Chakravarty Khadikkar</div>
+          <div class="hero-author-role">Poet · Artist · Collaborator, Lahe Lahe Collectives</div>
+        </div>
+      </div>
+      <div class="hero-date">April 2026 &nbsp;·&nbsp; Lahe Lahe Collectives</div>
+    </div>
+  </section>
+
+  <div class="border-strip"></div>
+
+  <!-- ARTICLE BODY -->
+  <article class="article-body">
+
+    <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <p>
+      Some songs do not merely live in the ear. They settle somewhere deeper — in the chest, in the fingertips, in the way you reach for colour when the world goes quiet. For me, the songs of Rabindranath Thakur have always been that kind of presence. Not background. Not memory. Breath.
+    </p>
+
+    <p>
+      Growing up, the melodies of Kobiguru were simply the air of the house — hummed while cooking, whispered before sleep, sung at the first light of a festival morning. They carried within them a whole universe: Krishna and Radha beneath the kadamba tree, the river, the rain, the ache of longing, and the grace of devotion. I did not study them so much as absorb them, the way cloth absorbs colour.
+    </p>
+
+    <div class="pull-quote">
+      <p>That imagination slowly found form — shaping itself around the timeless beauty of this eternal song.</p>
+    </div>
+
+    <h2>The <em>Encounter</em> That Sparked This Piece</h2>
+
+    <p>
+      When I first encountered Pattachitra — truly encountered it, not as a footnote in a textbook but as a living thing held in the hands of a master chitrakar — I understood immediately that this was a language capable of holding what Tagore's songs already knew. The bold, contained lines. The orange skies made not of paint but of ochre and stone. The figures who do not so much stand in the frame as inhabit it, like actors who have never needed a stage.
+    </p>
+
+    <p>
+      Pattachitra was born in the temple town of Puri, in the shadow of the Jagannath tradition, and for a thousand years its primary subject has been the divine — Krishna, Radha, the Dashavatara, the great leelas. When I sat down to begin this piece, the marriage felt inevitable. Tagore had written of Krishna's flute as something that tears open the ordinary world. Pattachitra had been drawing that exact tear for a millennium.
+    </p>
+
+    <div class="painting-inset">
+      <img src="WhatsApp Image 2026-04-22 at 23.47.08.jpeg"
+           alt="Full Pattachitra painting — Krishna with flute, Radha, and the poet-sage beneath a flowering tree"/>
+    </div>
+    <p class="painting-caption">Pattachitra on cotton canvas · Earth-derived pigments · 45+ hours · Arunima Chakravarty Khadikkar</p>
+
+    <h2>Reading the <em>Painting</em></h2>
+
+    <p>
+      Look at the figure of Krishna — blue as the deep sky, crowned and jewelled, the flute at his lips as though the music has not yet ended and never will. To his right stands Radha, hands joined in devotion, her expression that particular mixture of ache and surrender that Tagore's Rabindra Sangeet understands better than almost any other art form.
+    </p>
+
+    <p>
+      And then, seated at the base of the tree, almost at their feet — a white-haired sage, bent forward in listening. I see in him every person who has ever closed their eyes at the opening notes of a Tagore composition and felt the ordinary world recede. He is the listener. He is all of us.
+    </p>
+
+    <p>
+      The border of the painting is alive with peacock feathers, flowering vines, and the characteristic bead-patterns of Pattachitra — each element painted stroke by stroke, no shortcut, no shorthand. The orange ground — the colour of a festival sky, of a lamp's first light — comes from mineral pigments prepared in the tradition of the craft. Nothing is simulated. Everything is earned.
+    </p>
+
+    <!-- SONG BLOCK -->
+    <div class="song-block">
+      <div class="song-label">✦ &nbsp; The Song That Became This Painting</div>
+      <div class="song-attribution">— Kobiguru Rabindranath Thakur</div>
+      <div class="song-lines">
+        <span>Sajani sajani raadhika lo, dekha abahun chaahiya</span>
+        <span>Mridulagamana shyam aaoye &nbsp; mridula gaan gahiya.</span>
+        <span>Pinaha jhatita kusumahaar, &nbsp; pinaha nil aangiya.</span>
+        <span>Sundari sindoor deke &nbsp; seethi karaha rangiya.</span>
+        <span>Sahachari sab naach naach milan-geet gaao re,</span>
+        <span>Chanchala manjeeraraba &nbsp; kunjagagana chaao re.</span>
+        <span>Sajani, aba ujaar madir &nbsp; kanakadeep jwaaliya ,</span>
+        <span>Surabhi karaha kunjabhabana &nbsp; gandhasalila dhaaliya.</span>
+        <span>Mallika chameli beli &nbsp; kusuma tulaha balika.</span>
+        <span>Gaantha juthi, gaantha jaati, &nbsp; gaantha bakulamaalika;</span>
+        <span>Trishitanayana bhanusingha &nbsp; kunjapathame chaahiya -</span>
+        <span>Mridulagamana shyama aawe &nbsp; mridula gaana gaahiya.</span>
+      </div>
+    </div>
+
+    <h2>Slowness as <em>Devotion</em></h2>
+
+    <p>
+      This piece took more than 45 hours. That is not a number meant to impress — it is simply the honest account of what the work required. The preparation of the canvas. The laying of the ground colour in layers, each dried before the next. The outlining, done freehand, with a brush made from the tradition's own methods. The filling. The detailing. The border, which is its own world of patience.
+    </p>
+
+    <p>
+      Tagore once wrote that the highest form of worship is concentration. Pattachitra is a form of worship in exactly that sense — it demands that you be nowhere else. There is no rushing a border bead. There is no skipping the second layer of ground. The craft insists on presence in a way that, perhaps, is itself a kind of devotion to the song it depicts.
+    </p>
+
+    <div class="craft-details">
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Craft Tradition</div>
+        <div class="craft-detail-value">Pattachitra — Odisha, 1,000+ Years</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Subject</div>
+        <div class="craft-detail-value">Sajani Sajani Raadhika Lo — Rabindranath Thakur</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Time per Piece</div>
+        <div class="craft-detail-value">45+ Hours, Fully Hand-Painted</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Pigments</div>
+        <div class="craft-detail-value">Earth-derived, mineral, non-toxic</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Canvas</div>
+        <div class="craft-detail-value">100% Natural Cotton · 38×42cm</div>
+      </div>
+      <div class="craft-detail-item">
+        <div class="craft-detail-label">Artisan Bridge</div>
+        <div class="craft-detail-value">QR code linking you to the maker's story</div>
+      </div>
+    </div>
+
+    <p>
+      Every Lahe Lahe tote carries a Digital Artisan Bridge QR on its back. Scan it and you do not just learn the name and village of the artisan who painted it — you enter the work itself. You are not buying a bag. You are carrying a song.
+    </p>
+
+    <div class="author-card">
+      <img src="Arunima Chakravarty.jpg" alt="Arunima Chakravarty Khadikkar" class="author-card-photo"/>
+      <div>
+        <div class="author-card-label">Written & Painted By</div>
+        <div class="author-card-name">Arunima Chakravarty Khadikkar</div>
+        <p class="author-card-bio">Poet, artist, and collaborator with Lahe Lahe Collectives. Arunima grew up with Rabindranath Thakur's songs woven into the fabric of daily life. This painting is where that lifelong humming finally found its visible form — in the language of a thousand-year-old craft.</p>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <h3>Carry a Song Home</h3>
+      <p>Browse the Heritage Canvas Collection — each tote individually hand-painted, each one unrepeatable. B2B wholesale and custom branding available.</p>
+      <a href="https://lahelahe.co.in/shop" class="cta-btn">Explore the Collection →</a>
+    </div>
+
+  </article>
+
+  <div class="border-strip"></div>
+
+  <footer class="post-footer">
+    <div class="post-footer-brand">Lahe Lahe Collectives &nbsp;·&nbsp; Art You Can Carry</div>
+    <div class="post-footer-links">lahelahe.co.in &nbsp;·&nbsp; @lahelahecollective</div>
+  </footer>
+
+</body>
+</html>
