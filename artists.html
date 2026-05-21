@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="manifest" href="/site.webmanifest" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/x-icon" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/apple-touch-icon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Artists — Lahe Lahe Collectives</title>
@@ -153,6 +150,18 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
   .footer-grid { grid-template-columns:1fr;gap:32px; }
 }
 @media (max-width:480px) { .artists-grid { grid-template-columns:1fr; } }
+
+/* ── Nav dropdown ── */
+.nav-item-blog { position: relative; list-style: none; }
+.nav-item-blog > a { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; position: relative; transition: color 0.3s; }
+.nav-item-blog > a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+.nav-item-blog:hover > a { color: var(--forest); }
+.nav-item-blog:hover > a::after { transform: scaleX(1); }
+.nav-dropdown { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(245,240,232,0.98); backdrop-filter: blur(16px); border: 1px solid rgba(184,134,11,0.2); border-top: 2px solid var(--gold); list-style: none; min-width: 290px; padding: 8px 0; box-shadow: 0 16px 40px rgba(0,0,0,0.1); z-index: 300; opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s; }
+.nav-dropdown::before { content: ''; position: absolute; top: -16px; left: 0; right: 0; height: 16px; }
+.nav-item-blog:hover .nav-dropdown, .nav-item-blog:focus-within .nav-dropdown { opacity: 1; pointer-events: auto; visibility: visible; transform: translateX(-50%) translateY(0); }
+.nav-dropdown li a { display: block; padding: 13px 22px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s, background 0.2s, padding-left 0.2s; white-space: nowrap; border-left: 2px solid transparent; }
+.nav-dropdown li a:hover { color: var(--forest-deep); background: rgba(184,134,11,0.06); padding-left: 28px; border-left-color: var(--gold); }
 </style>
 </head>
 <body>
@@ -162,22 +171,39 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
 <nav>
   <a href="index.html" class="nav-logo-text">Lahe Lahe</a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="artists.html" class="active">Artists</a></li>
-    <li><a href="collections.html">Collections</a></li>
-    <li><a href="#">Our Story</a></li>
-    <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+    <li class="nav-item-blog">
+      <a href="collections.html">Collections</a>
+      <ul class="nav-dropdown">
+        <li><a href="collections.html">Collections Overview</a></li>
+        <li><a href="art_gallery.html">Art Gallery</a></li>
+      </ul>
+    </li>
+    <li><a href="artists.html">Artisans</a></li>
+    <li><a href="our-story.html">Our Story</a></li>
+    <li><a href="partners.html">Partner</a></li>
+    <li><a href="https://shop.lahelahe.co.in" target="_blank">Shop</a></li>
+    <li class="nav-item-blog">
+      <a href="">Journal</a>
+      <ul class="nav-dropdown">
+        <li><a href="lahe-lahe-blog-post-01.html">01 · Where Trees Become Tradition</a></li>
+        <li><a href="lahe-lahe-blog-post-02.html">02 · When Rabindranath Met Pattachitra</a></li>
+      </ul>
+    </li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
+
 <div class="nav-mobile" id="navMobile">
-  <a href="index.html">Home</a>
-  <a href="artists.html">Artists</a>
-  <a href="collections.html">Collections</a>
-  <a href="our-story.html">Our Story</a>
-  <a href="https://lahelahe.co.in/shop" target="_blank">Shop</a>
+  <a href="collections.html" onclick="closeNav()">Collections</a>
+  <a href="art_gallery.html" onclick="closeNav()">Art Gallery</a>
+  <a href="artists.html" onclick="closeNav()">Artisans</a>
+  <a href="our-story.html" onclick="closeNav()">Our Story</a>
+  <a href="partners.html" onclick="closeNav()">Partner</a>
+  <a href="https://shop.lahelahe.co.in" target="_blank" onclick="closeNav()">Shop</a>
+  <a href="lahe-lahe-blog-post-01.html" onclick="closeNav()">Journal — Post 01</a>
+  <a href="lahe-lahe-blog-post-02.html" onclick="closeNav()">Journal — Post 02</a>
 </div>
 
 <section class="page-hero">
@@ -223,7 +249,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
         <div class="artist-overlay"></div>
         <div class="artist-content">
           <div class="artist-craft-label">Pattachitra &nbsp;·&nbsp; Architect &amp; Artist</div>
-          <div class="artist-name">Arunima Chakravarty Khadikar</em></div>
+          <div class="artist-name">Arunima Chakravarty Khadikar</div>
           <div class="artist-region">Bengaluru &nbsp;·&nbsp; India</div>
           <div class="artist-link-hint">View Profile <span class="arr">&rarr;</span></div>
         </div>
@@ -232,109 +258,104 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
 	
 	<a href="neetu-s-kumar.html" class="artist-card reveal">
   <div class="artist-card-inner">
-    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/Neetu.jpeg" alt="Neetu S Kumar" class="artist-photo">
+    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/Neetu.jpeg" alt="Neetu S Kumar" class="artist-photo" loading="lazy" decoding="async">
     <div class="artist-overlay"></div>
     <div class="artist-content">
-      <div class="artist-craft-label">Kerala Mural Artist</div>
+      <div class="artist-craft-label">Kerala Mural &nbsp;·&nbsp; Artist</div>
       <h3 class="artist-name">Neetu S Kumar</h3>
       <div class="artist-region">Kerala &nbsp;·&nbsp; India</div>
-      <div class="artist-link-hint">View Portfolio <span class="arr">→</span></div>
+      <div class="artist-link-hint">View Profile <span class="arr">&rarr;</span></div>
     </div>
   </div>
 </a>
 
 <a href="krishnaprakash-v-martand.html" class="artist-card reveal">
   <div class="artist-card-inner">
-    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/krishna.png" alt="Krishnaprakash V. Martand" class="artist-image artist-photo">
+    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/krishna.png" alt="Krishnaprakash V. Martand" class="artist-photo" loading="lazy" decoding="async">
     <div class="artist-overlay"></div>
     <div class="artist-content">
-      <div class="artist-craft-label">Surpur &nbsp;·&nbsp; Sculpture & Visual Arts</div>
+      <div class="artist-craft-label">Surpur &nbsp;·&nbsp; Sculpture &amp; Visual Arts</div>
       <h3 class="artist-name">Krishnaprakash <em>V. Martand</em></h3>
-       <div class="artist-region">Gulbarga &nbsp;·&nbsp; India</div>
-      <div class="artist-link-hint">
-        View Profile <span class="arr">→</span>
-      </div>
+      <div class="artist-region">Gulbarga &nbsp;·&nbsp; India</div>
+      <div class="artist-link-hint">View Profile <span class="arr">&rarr;</span></div>
     </div>
   </div>
 </a>
 	
 	<a href="sakshi-sahu.html" class="artist-card reveal">
   <div class="artist-card-inner">
-    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/sk_im.jpg" alt="Sakshi Sahu" class="artist-photo">
+    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/sk_im.jpg" alt="Sakshi Sahu" class="artist-photo" loading="lazy" decoding="async">
     <div class="artist-overlay"></div>
     <div class="artist-content">
       <div class="artist-craft-label">Gond Art &nbsp;·&nbsp; Architect &amp; Artist</div>
       <h3 class="artist-name">Sakshi Sahu</h3>
       <div class="artist-region">Bina &nbsp;·&nbsp; MP</div>
-      <div class="artist-link-hint">View Portfolio <span class="arr">→</span></div>
+      <div class="artist-link-hint">View Profile <span class="arr">&rarr;</span></div>
     </div>
   </div>
 </a>
 
 <a href="dinesh-soni.html" class="artist-card reveal">
   <div class="artist-card-inner">
-    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/dinesh.png" alt="Dinesh Soni" class="artist-image artist-photo">
+    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/dinesh.png" alt="Dinesh Soni" class="artist-photo" loading="lazy" decoding="async">
     <div class="artist-overlay"></div>
     <div class="artist-content">
       <div class="artist-craft-label">Pichwai Art</div>
       <h3 class="artist-name">Dinesh <em>Soni</em></h3>
-	  <div class="artist-region">Bhilwara &nbsp;·&nbsp; India</div>
-      <div class="artist-link-hint">
-        View Profile <span class="arr">→</span>
-      </div>
+      <div class="artist-region">Bhilwara &nbsp;·&nbsp; India</div>
+      <div class="artist-link-hint">View Profile <span class="arr">&rarr;</span></div>
     </div>
   </div>
 </a>
 
 <a href="nandu-s-kumar.html" class="artist-card reveal">
   <div class="artist-card-inner">
-    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/nandu.jpeg" alt="Nandu S Kumar" class="artist-photo">
+    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/nandu.jpeg" alt="Nandu S Kumar" class="artist-photo" loading="lazy" decoding="async">
     <div class="artist-overlay"></div>
     <div class="artist-content">
       <div class="artist-craft-label">Kerala Mural &nbsp;·&nbsp; Architect &amp; Artist</div>
       <h3 class="artist-name">Nandu S Kumar</h3>
       <div class="artist-region">Bengaluru &nbsp;·&nbsp; India</div>
-      <div class="artist-link-hint">View Portfolio <span class="arr">→</span></div>
+      <div class="artist-link-hint">View Profile <span class="arr">&rarr;</span></div>
     </div>
   </div>
 </a>
 
 <a href="neeti.html" class="artist-card reveal">
   <div class="artist-card-inner">
-    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/niti.jpeg" alt="Niti Prasad" class="artist-photo">
+    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/niti.jpeg" alt="Niti Prasad" class="artist-photo" loading="lazy" decoding="async">
     <div class="artist-overlay"></div>
     <div class="artist-content">
       <div class="artist-craft-label">Madhubani &nbsp;·&nbsp; Mithila &nbsp;·&nbsp; Sohrai</div>
       <h3 class="artist-name">Niti Prasad</h3>
       <div class="artist-region">Madhya Pradesh &nbsp;·&nbsp; India</div>
-      <div class="artist-link-hint">View Portfolio <span class="arr">→</span></div>
+      <div class="artist-link-hint">View Profile <span class="arr">&rarr;</span></div>
     </div>
   </div>
 </a>
 
-<a href="ankita.html" class="artist-card reveal">
+<a href="ankita-chakrabarty.html" class="artist-card reveal">
   <div class="artist-card-inner">
-    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/ankita.jpeg" alt="Ankita Chakrabarty" class="artist-photo">
+    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/ankita.jpeg" alt="Ankita Chakrabarty" class="artist-photo" loading="lazy" decoding="async">
     <div class="artist-overlay"></div>
     <div class="artist-content">
       <div class="artist-craft-label">Alpona Art</div>
       <h3 class="artist-name">Ankita Chakrabarty</h3>
       <div class="artist-region">Hyderabad &nbsp;·&nbsp; India</div>
-      <div class="artist-link-hint">View Portfolio <span class="arr">→</span></div>
+      <div class="artist-link-hint">View Profile <span class="arr">&rarr;</span></div>
     </div>
   </div>
 </a>
 
-
 <a href="radhika-goel.html" class="artist-card reveal">
   <div class="artist-card-inner">
-    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/radhika.jpeg" alt="Radhika Goel" class="artist-photo">
+    <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/radhika.jpeg" alt="Radhika Goel" class="artist-photo" loading="lazy" decoding="async">
     <div class="artist-overlay"></div>
     <div class="artist-content">
-      <div class="artist-craft-label">Zentangle Mandala Illustration</div>
+      <div class="artist-craft-label">Zentangle &nbsp;·&nbsp; Mandala Illustration</div>
       <h3 class="artist-name">Radhika Goel</h3>
-      <div class="artist-region">Muzzafarnagar &nbsp;·&nbsp; India</div>
-      <div class="artist-link-hint">View Portfolio <span class="arr">→</span></div>
+      <div class="artist-region">Muzaffarnagar &nbsp;·&nbsp; India</div>
+      <div class="artist-link-hint">View Profile <span class="arr">&rarr;</span></div>
     </div>
   </div>
 </a>
@@ -392,7 +413,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
       <h2 class="bridge-strip-title">Art that carries<br>a <em>living story.</em></h2>
       <p class="bridge-strip-body">We connect each artisan directly to collectors who understand the value of slow, deliberate creation — ensuring fair wages and the survival of endangered craft traditions.</p>
     </div>
-    <a href="https://lahelahe.co.in/shop" target="_blank" class="bridge-strip-cta reveal"><span>Explore the Collection</span></a>
+    <a href="https://shop.lahelahe.co.in" target="_blank" class="bridge-strip-cta reveal"><span>Explore the Collection</span></a>
   </div>
 </div>
 
@@ -422,7 +443,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
         <li><a href="artists.html">Meet the Artisans</a></li>
         <li><a href="partners.html">Partner With Us</a></li>
         <li><a href="mailto:lahelahe.connect@gmail.com">lahelahe.connect@gmail.com</a></li>
-        <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+        <li><a href="https://shop.lahelahe.co.in" target="_blank">Shop</a></li>
       </ul>
     </div>
   </div>

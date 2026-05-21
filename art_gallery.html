@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections — Lahe Lahe Collectives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8; --cream-dark: #EDE6D6;
+  --forest: #2C5F2E; --forest-deep: #1A3D1C; --forest-light: #4A7C4E;
+  --gold: #B8860B; --gold-light: #D4A843; --gold-pale: #E8D5A0;
+  --ink: #1C1C1C; --text-muted: #6B6050;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--cream); color:var(--ink); font-family:'Cormorant Garamond',serif; font-size:18px; overflow-x:hidden; }
+
+@media (pointer:fine) { body { cursor:none; } .cursor,.cursor-dot { display:block; } }
+.cursor { display:none; width:14px;height:14px;border:1.5px solid var(--forest);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.25s ease; }
+.cursor-dot { display:none; width:4px;height:4px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%); }
+
+/* ── NAV ── */
+nav { position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:18px 60px; }
+nav::before { content:'';position:absolute;inset:0;background:rgba(245,240,232,0.95);backdrop-filter:blur(16px);z-index:-1;border-bottom:1px solid rgba(184,134,11,0.18); }
+.nav-logo-text { font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.3em;color:var(--forest-deep);text-decoration:none;font-weight:500; }
+.nav-links { display:flex;gap:36px;list-style:none; }
+.nav-links a { font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;position:relative;transition:color 0.3s; }
+.nav-links a::after { content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease; }
+.nav-links a:hover,.nav-links a.active { color:var(--forest); }
+.nav-links a:hover::after,.nav-links a.active::after { transform:scaleX(1); }
+.nav-toggle { display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;cursor:pointer;background:none;border:none;padding:0; }
+.nav-toggle span { display:block;width:100%;height:1.5px;background:var(--forest-deep);transition:all 0.3s ease;transform-origin:center; }
+.nav-toggle.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity:0; }
+.nav-toggle.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+.nav-mobile { display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--forest-deep);z-index:190;flex-direction:column;justify-content:center;align-items:center;gap:40px;opacity:0;transition:opacity 0.3s ease; }
+.nav-mobile.open { opacity:1; }
+.nav-mobile a { font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.4em;color:var(--cream);text-decoration:none;text-transform:uppercase;transition:color 0.3s; }
+.nav-mobile a:hover { color:var(--gold-light); }
+
+/* ── PAGE HERO ── */
+.page-hero { padding:160px 60px 72px;background:var(--cream);position:relative;overflow:hidden; }
+.page-hero::before { content:'';position:absolute;bottom:0;left:60px;right:60px;height:1px;background:linear-gradient(to right,transparent,rgba(184,134,11,0.25),transparent); }
+.page-eyebrow { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.55em;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:14px; }
+.page-eyebrow::before { content:'';width:28px;height:1px;background:rgba(184,134,11,0.45); }
+.page-title { font-size:clamp(44px,6vw,84px);font-weight:300;color:var(--forest-deep);line-height:0.9;animation:fadeUp 1.1s ease forwards;opacity:0;transform:translateY(28px); }
+.page-title em { font-style:italic;color:var(--gold); }
+.page-subtitle { font-size:clamp(16px,1.6vw,20px);font-weight:300;font-style:italic;color:var(--text-muted);letter-spacing:0.06em;margin-top:22px;animation:fadeUp 1.1s 0.2s ease forwards;opacity:0;transform:translateY(16px);max-width:520px;line-height:1.7; }
+
+/* ── SCROLLING BAND ── */
+.band { background:var(--forest-deep);padding:16px 0;overflow:hidden;border-top:1px solid rgba(184,134,11,0.15);border-bottom:1px solid rgba(184,134,11,0.15); }
+.band-track { display:flex;animation:bandScroll 32s linear infinite;width:max-content; }
+@keyframes bandScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.band-item { display:flex;align-items:center;gap:28px;padding:0 28px;white-space:nowrap;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.35em;color:rgba(245,240,232,0.75); }
+.band-dot { width:4px;height:4px;background:var(--gold-light);border-radius:50%;flex-shrink:0; }
+
+/* ── FILTER SECTION ── */
+.filter-section { padding:56px 60px 0; }
+.filter-row { display:flex;align-items:flex-start;gap:60px;flex-wrap:wrap; }
+.filter-group { display:flex;flex-direction:column;gap:12px; }
+.filter-label { font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.5em;color:var(--gold);text-transform:uppercase; }
+.filter-pills { display:flex;flex-wrap:wrap;gap:8px; }
+.pill {
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;
+  padding:7px 18px;border:1px solid rgba(44,95,46,0.25);
+  color:var(--text-muted);background:transparent;
+  cursor:pointer;transition:all 0.3s ease;text-transform:uppercase;
+  position:relative;overflow:hidden;
+}
+.pill::before { content:'';position:absolute;inset:0;background:var(--forest-deep);transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease;z-index:-1; }
+.pill:hover { color:var(--cream);border-color:var(--forest-deep); }
+.pill:hover::before { transform:scaleX(1); }
+.pill.active { background:var(--forest-deep);color:var(--cream);border-color:var(--forest-deep); }
+.pill.active::before { transform:scaleX(1); }
+
+.filter-divider { width:1px;background:rgba(184,134,11,0.2);align-self:stretch;margin-top:28px; }
+
+/* ── RESULTS SUMMARY ── */
+.results-bar { padding:28px 60px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px; }
+.results-count { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--text-muted); }
+.results-count span { color:var(--forest-deep); }
+.sort-label { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:var(--text-muted);font-style:italic; }
+
+/* ── GRID ── */
+.collection-section { padding:36px 60px 120px; }
+.art-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:3px; }
+
+/* ── ART CARD ── */
+.art-card {
+  position:relative;overflow:hidden;cursor:pointer;
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease, transform 0.6s ease;
+}
+.art-card.visible { opacity:1;transform:translateY(0); }
+.art-card-inner { position:relative;overflow:hidden;aspect-ratio:1/1; }
+.art-photo { width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94); }
+.art-card:hover .art-photo { transform:scale(1.07); }
+.art-overlay { position:absolute;inset:0;background:linear-gradient(to top,rgba(10,25,10,0.9) 0%,rgba(10,25,10,0.2) 50%,transparent 80%);transition:background 0.5s ease; }
+.art-card:hover .art-overlay { background:linear-gradient(to top,rgba(10,25,10,0.95) 0%,rgba(10,25,10,0.4) 60%,rgba(10,25,10,0.05) 100%); }
+.art-card-inner::after { content:'';position:absolute;inset:14px;border:1px solid rgba(184,134,11,0);pointer-events:none;z-index:3;transition:border-color 0.5s ease; }
+.art-card:hover .art-card-inner::after { border-color:rgba(184,134,11,0.35); }
+
+.art-content { position:absolute;bottom:0;left:0;right:0;padding:24px 22px;z-index:2; }
+.art-style-tag { font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.45em;color:var(--gold-light);margin-bottom:7px;opacity:0;transform:translateY(6px);transition:all 0.4s ease; }
+.art-card:hover .art-style-tag { opacity:1;transform:translateY(0); }
+.art-title { font-size:clamp(18px,1.8vw,24px);font-weight:300;color:var(--cream);line-height:1.15; }
+.art-title em { display:block;font-style:italic;font-size:0.78em;color:var(--gold-pale);margin-top:2px; }
+.art-sku { font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.3em;color:rgba(245,240,232,0.4);margin-top:8px;display:flex;align-items:center;gap:10px; }
+.art-sku::before { content:'';width:16px;height:1px;background:rgba(184,134,11,0.4); }
+.art-enquire { display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;font-style:italic;color:var(--gold-light);border-bottom:1px solid rgba(184,134,11,0);padding-bottom:2px;opacity:0;transform:translateY(8px);transition:all 0.4s ease 0.05s; }
+.art-card:hover .art-enquire { opacity:1;transform:translateY(0);border-bottom-color:rgba(184,134,11,0.4); }
+.art-enquire .arr { transition:transform 0.3s; }
+.art-card:hover .art-enquire .arr { transform:translateX(5px); }
+
+/* ── EMPTY STATE ── */
+.empty-state { grid-column:1/-1;padding:80px 0;text-align:center; }
+.empty-icon { font-size:48px;margin-bottom:20px;opacity:0.3; }
+.empty-title { font-size:28px;font-weight:300;color:var(--forest-deep);margin-bottom:10px; }
+.empty-subtitle { font-style:italic;color:var(--text-muted);font-size:16px; }
+
+/* ── NO-IMAGE CARD ── */
+.art-placeholder { width:100%;height:100%;background:linear-gradient(160deg,var(--forest-deep) 0%,#2a5a2c 50%,var(--forest) 100%);display:flex;align-items:center;justify-content:center;position:relative; }
+.art-placeholder-pattern { position:absolute;inset:0;opacity:0.06;background-image:repeating-linear-gradient(45deg,var(--gold-light) 0,var(--gold-light) 1px,transparent 0,transparent 50%);background-size:22px 22px; }
+.art-placeholder-icon { width:52px;height:52px;border:1px solid rgba(184,134,11,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1; }
+.art-placeholder-icon svg { width:24px;height:24px;opacity:0.3;stroke:var(--gold-pale);fill:none;stroke-width:1; }
+
+/* ── BRIDGE CTA ── */
+.bridge { background:var(--forest-deep);padding:80px 60px;position:relative;overflow:hidden;margin-top:3px; }
+.bridge::before { content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(74,124,78,0.12) 0%,transparent 70%);pointer-events:none; }
+.bridge-inner { display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;position:relative;z-index:1; }
+.bridge-eyebrow { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.5em;color:var(--gold-light);margin-bottom:12px; }
+.bridge-title { font-size:clamp(24px,3vw,44px);font-weight:300;color:var(--cream);line-height:1.1; }
+.bridge-title em { font-style:italic;color:var(--gold-light); }
+.bridge-body { font-size:15px;color:rgba(245,240,232,0.55);line-height:1.8;max-width:400px;margin-top:12px; }
+.bridge-cta { display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:transparent;color:var(--cream);font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;text-decoration:none;text-transform:uppercase;border:1px solid rgba(184,134,11,0.35);position:relative;overflow:hidden;transition:color 0.4s,border-color 0.4s;white-space:nowrap; }
+.bridge-cta::before { content:'';position:absolute;inset:0;background:rgba(184,134,11,0.12);transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease; }
+.bridge-cta span { position:relative;z-index:1; }
+.bridge-cta:hover { border-color:rgba(184,134,11,0.7);color:var(--gold-light); }
+.bridge-cta:hover::before { transform:scaleX(1); }
+
+/* ── FOOTER ── */
+footer { background:var(--forest-deep);padding:72px 60px 32px;position:relative; }
+footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent); }
+.footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;padding-bottom:48px;border-bottom:1px solid rgba(184,134,11,0.12);margin-bottom:32px; }
+.footer-logo-text { font-family:'Cinzel',serif;font-size:16px;letter-spacing:0.25em;color:var(--cream);opacity:0.9;margin-bottom:14px;display:block;text-decoration:none; }
+.footer-tagline { font-style:italic;font-size:16px;color:var(--gold-light);margin-bottom:14px; }
+.footer-desc { font-size:14px;color:rgba(245,240,232,0.4);line-height:1.8;max-width:300px; }
+.footer-col-title { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.5em;color:var(--gold-light);margin-bottom:20px; }
+.footer-links { list-style:none;display:flex;flex-direction:column;gap:12px; }
+.footer-links a { color:rgba(245,240,232,0.45);font-size:15px;text-decoration:none;letter-spacing:0.03em;transition:color 0.3s; }
+.footer-links a:hover { color:var(--gold-light); }
+.footer-bottom { display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(245,240,232,0.28);letter-spacing:0.1em; }
+.footer-social { display:flex;gap:24px; }
+.footer-social a { color:rgba(245,240,232,0.35);font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;text-decoration:none;transition:color 0.3s; }
+.footer-social a:hover { color:var(--gold-light); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { to { opacity:1;transform:translateY(0); } }
+.reveal { opacity:0;transform:translateY(36px);transition:all 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity:1;transform:translateY(0); }
+
+/* ══════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════ */
+.lightbox {
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.4s ease;
+}
+.lightbox.open { opacity:1;pointer-events:all; }
+
+/* Backdrop */
+.lb-backdrop {
+  position:absolute;inset:0;
+  background:rgba(10,20,10,0.96);
+  backdrop-filter:blur(18px);
+  cursor:zoom-out;
+}
+
+/* Main container */
+.lb-container {
+  position:relative;z-index:1;
+  display:flex;align-items:stretch;
+  max-width:1180px;width:calc(100% - 40px);
+  max-height:calc(100vh - 60px);
+  transform:scale(0.94) translateY(16px);
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  box-shadow:0 40px 120px rgba(0,0,0,0.7);
+}
+.lightbox.open .lb-container { transform:scale(1) translateY(0); }
+
+/* Image pane */
+.lb-image-pane {
+  flex:1;min-width:0;
+  background:#0a140a;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.lb-image-pane img {
+  max-width:100%;max-height:calc(100vh - 60px);
+  object-fit:contain;display:block;
+  transition:opacity 0.3s ease;
+  user-select:none;-webkit-user-drag:none;
+}
+.lb-image-pane img.fading { opacity:0; }
+
+/* Info panel */
+.lb-info {
+  width:280px;flex-shrink:0;
+  background:var(--cream);
+  padding:48px 32px 36px;
+  display:flex;flex-direction:column;gap:0;
+  overflow-y:auto;
+}
+.lb-info-eyebrow {
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.55em;
+  color:var(--gold);margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.lb-info-eyebrow::before { content:'';width:22px;height:1px;background:rgba(184,134,11,0.5); }
+.lb-info-style {
+  font-size:clamp(22px,2.5vw,32px);font-weight:300;
+  color:var(--forest-deep);line-height:1.1;margin-bottom:6px;
+}
+.lb-info-artist {
+  font-style:italic;font-size:17px;color:var(--gold);
+  margin-bottom:28px;
+}
+.lb-divider { height:1px;background:rgba(184,134,11,0.2);margin-bottom:24px; }
+.lb-info-label {
+  font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.5em;
+  color:var(--text-muted);margin-bottom:6px;
+}
+.lb-info-value {
+  font-size:13px;color:var(--ink);letter-spacing:0.04em;
+  margin-bottom:20px;font-family:'Cinzel',serif;
+}
+.lb-info-sku {
+  font-size:10px;color:var(--text-muted);letter-spacing:0.15em;
+  font-family:'Cinzel',serif;margin-bottom:32px;
+  padding:10px 14px;background:var(--cream-dark);
+  border-left:2px solid rgba(184,134,11,0.35);
+}
+.lb-artist-link {
+  display:inline-flex;align-items:center;gap:8px;margin-top:auto;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;
+  color:var(--forest-deep);text-decoration:none;text-transform:uppercase;
+  border-bottom:1px solid rgba(44,95,46,0.25);padding-bottom:4px;
+  transition:color 0.3s,border-color 0.3s;width:fit-content;
+}
+.lb-artist-link:hover { color:var(--gold);border-bottom-color:rgba(184,134,11,0.5); }
+.lb-artist-link .arr { transition:transform 0.3s; }
+.lb-artist-link:hover .arr { transform:translateX(4px); }
+
+/* Counter */
+.lb-counter {
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.4em;
+  color:var(--text-muted);margin-top:20px;
+}
+
+/* Close button */
+.lb-close {
+  position:absolute;top:18px;right:18px;z-index:10;
+  width:40px;height:40px;border:1px solid rgba(184,134,11,0.3);
+  background:rgba(10,20,10,0.7);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color 0.3s,background 0.3s;
+}
+.lb-close:hover { border-color:rgba(184,134,11,0.7);background:rgba(184,134,11,0.12); }
+.lb-close svg { width:16px;height:16px;stroke:var(--cream);fill:none;stroke-width:1.5;stroke-linecap:round; }
+
+/* Prev / Next */
+.lb-nav {
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:48px;height:48px;border:1px solid rgba(245,240,232,0.15);
+  background:rgba(10,20,10,0.6);cursor:pointer;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color 0.3s,background 0.3s;
+}
+.lb-nav:hover { border-color:rgba(184,134,11,0.55);background:rgba(184,134,11,0.12); }
+.lb-nav svg { width:18px;height:18px;stroke:var(--cream);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round; }
+.lb-prev { left:16px; }
+.lb-next { right:16px; }
+.lb-nav.hidden { opacity:0;pointer-events:none; }
+
+/* Responsive lightbox */
+@media (max-width:768px) {
+  .lb-container { flex-direction:column;max-height:calc(100vh - 20px);width:calc(100% - 20px); }
+  .lb-image-pane { max-height:55vh; }
+  .lb-image-pane img { max-height:55vh; }
+  .lb-info { width:100%;padding:24px 22px 28px;flex-direction:row;flex-wrap:wrap;gap:16px;align-items:flex-start; }
+  .lb-info-eyebrow { display:none; }
+  .lb-info-style { font-size:20px;margin-bottom:2px; }
+  .lb-info-artist { font-size:15px;margin-bottom:0; }
+  .lb-divider { display:none; }
+  .lb-info-sku { margin-bottom:0;font-size:9px; }
+  .lb-counter { margin-top:0; }
+  .lb-artist-link { margin-top:0; }
+  .lb-nav { display:none; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width:1024px) {
+  nav { padding:16px 36px; }
+  .page-hero,.filter-section,.results-bar,.collection-section { padding-left:36px;padding-right:36px; }
+  .art-grid { grid-template-columns:repeat(2,1fr); }
+  .bridge { padding:60px 36px; }
+  footer { padding:60px 36px 28px; } footer::before { left:36px;right:36px; }
+  .footer-grid { grid-template-columns:1fr 1fr;gap:40px; }
+  .footer-grid > div:first-child { grid-column:1/-1; }
+}
+@media (max-width:768px) {
+  nav { padding:14px 20px; } .nav-links { display:none; } .nav-toggle { display:flex; }
+  .page-hero,.filter-section,.results-bar,.collection-section { padding-left:20px;padding-right:20px; }
+  .filter-row { gap:32px; }
+  .filter-divider { display:none; }
+  .art-grid { grid-template-columns:repeat(2,1fr);gap:2px; }
+  .bridge { padding:56px 20px; } .bridge-inner { flex-direction:column;align-items:flex-start; }
+  footer { padding:56px 20px 28px; } footer::before { left:20px;right:20px; }
+  .footer-grid { grid-template-columns:1fr;gap:32px; }
+}
+@media (max-width:480px) { .art-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo-text">Lahe Lahe</a>
+  <ul class="nav-links">
+    <li><a href="collections.html" class="active">Collections</a></li>
+    <li><a href="artists.html">Artisans</a></li>
+    <li><a href="our-story.html">Our Story</a></li>
+    <li><a href="partners.html">Partner</a></li>
+    <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="collections.html">Collections</a>
+  <a href="artists.html">Artisans</a>
+  <a href="our-story.html">Our Story</a>
+  <a href="partners.html">Partner</a>
+  <a href="https://lahelahe.co.in/shop" target="_blank">Shop</a>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div style="max-width:720px">
+    <div class="page-eyebrow">14 Works · 8 Artisans · 8 Traditions</div>
+    <h1 class="page-title">The<br><em>Collection.</em></h1>
+    <p class="page-subtitle">Each canvas carries centuries of visual language — hand-painted by master artisans across India's living craft traditions.</p>
+  </div>
+</section>
+
+<!-- BAND -->
+<div class="band">
+  <div class="band-track">
+    <div class="band-item"><div class="band-dot"></div>Pattachitra · Odisha</div>
+    <div class="band-item"><div class="band-dot"></div>Gond Art · MP</div>
+    <div class="band-item"><div class="band-dot"></div>Kerala Mural · Kerala</div>
+    <div class="band-item"><div class="band-dot"></div>Pichwai · Rajasthan</div>
+    <div class="band-item"><div class="band-dot"></div>Surpur · Karnataka</div>
+    <div class="band-item"><div class="band-dot"></div>Madhubani · Bihar</div>
+    <div class="band-item"><div class="band-dot"></div>Sohrai · Jharkhand</div>
+    <div class="band-item"><div class="band-dot"></div>Alpona · Bengal</div>
+    <div class="band-item"><div class="band-dot"></div>12 × 12 inch Canvas</div>
+    <div class="band-item"><div class="band-dot"></div>Pattachitra · Odisha</div>
+    <div class="band-item"><div class="band-dot"></div>Gond Art · MP</div>
+    <div class="band-item"><div class="band-dot"></div>Kerala Mural · Kerala</div>
+    <div class="band-item"><div class="band-dot"></div>Pichwai · Rajasthan</div>
+    <div class="band-item"><div class="band-dot"></div>Surpur · Karnataka</div>
+    <div class="band-item"><div class="band-dot"></div>Madhubani · Bihar</div>
+    <div class="band-item"><div class="band-dot"></div>Sohrai · Jharkhand</div>
+    <div class="band-item"><div class="band-dot"></div>Alpona · Bengal</div>
+    <div class="band-item"><div class="band-dot"></div>12 × 12 inch Canvas</div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<section class="filter-section">
+  <div class="filter-row reveal">
+
+    <div class="filter-group">
+      <div class="filter-label">By Art Tradition</div>
+      <div class="filter-pills" id="styleFilters">
+        <button class="pill active" data-filter="style" data-value="all">All Traditions</button>
+        <button class="pill" data-filter="style" data-value="PTCHT">Pattachitra</button>
+        <button class="pill" data-filter="style" data-value="GOND">Gond Art</button>
+        <button class="pill" data-filter="style" data-value="KERM">Kerala Mural</button>
+        <button class="pill" data-filter="style" data-value="PCHWI">Pichwai</button>
+        <button class="pill" data-filter="style" data-value="SRPR">Surpur</button>
+        <button class="pill" data-filter="style" data-value="MDBNI">Madhubani</button>
+        <button class="pill" data-filter="style" data-value="SOHR">Sohrai</button>
+        <button class="pill" data-filter="style" data-value="ALPO">Alpona</button>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <div class="filter-group">
+      <div class="filter-label">By Artist</div>
+      <div class="filter-pills" id="artistFilters">
+        <button class="pill active" data-filter="artist" data-value="all">All Artists</button>
+        <button class="pill" data-filter="artist" data-value="AA01">Arunima</button>
+        <button class="pill" data-filter="artist" data-value="AA02">Sakshi</button>
+        <button class="pill" data-filter="artist" data-value="AA03">Nandu</button>
+        <button class="pill" data-filter="artist" data-value="AA04">Neetu</button>
+        <button class="pill" data-filter="artist" data-value="AA05">Krishnaprakash</button>
+        <button class="pill" data-filter="artist" data-value="AA06">Dinesh Soni</button>
+        <button class="pill" data-filter="artist" data-value="AA07">Niti Kumar</button>
+        <button class="pill" data-filter="artist" data-value="AA08">Ankita</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESULTS BAR -->
+<div class="results-bar reveal">
+  <div class="results-count">Showing <span id="visibleCount">14</span> works</div>
+  <div class="sort-label">12 × 12 inch · Hand-painted canvas</div>
+</div>
+
+<!-- GRID -->
+<section class="collection-section">
+  <div class="art-grid" id="artGrid">
+    <!-- Injected by JS -->
+  </div>
+</section>
+
+<!-- BRIDGE CTA -->
+<div class="bridge">
+  <div class="bridge-inner">
+    <div class="reveal">
+      <div class="bridge-eyebrow">Commission a Piece</div>
+      <h2 class="bridge-title">A tradition<br>made <em>for you.</em></h2>
+      <p class="bridge-body">Work directly with our artisans to commission a bespoke canvas. Every piece tells a story — yours can too.</p>
+    </div>
+    <a href="https://lahelahe.co.in/shop" target="_blank" class="bridge-cta reveal"><span>Enquire Now</span></a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="index.html" class="footer-logo-text">Lahe Lahe Collectives</a>
+      <div class="footer-tagline">The Art of Pause.</div>
+      <p class="footer-desc">A curated ecosystem connecting India's master artisans with those who believe in the irreplaceable value of slow, deliberate creation.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Explore</div>
+      <ul class="footer-links">
+        <li><a href="collections.html">All Collections</a></li>
+        <li><a href="artists.html">Meet the Artisans</a></li>
+        <li><a href="our-story.html">Our Story</a></li>
+        <li><a href="partners.html">Partner With Us</a></li>
+        <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <ul class="footer-links">
+        <li><a href="mailto:lahelahe.connect@gmail.com">lahelahe.connect@gmail.com</a></li>
+        <li><a href="https://www.instagram.com/lahelahecollectives" target="_blank">Instagram</a></li>
+        <li><a href="https://www.instagram.com/lahelahecollectives" target="_blank">@lahelahecollectives</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Lahe Lahe Collectives &nbsp;&middot;&nbsp; MSME Registered &nbsp;&middot;&nbsp; Est. India</span>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/lahelahecollectives" target="_blank">Instagram</a>
+      <a href="https://www.instagram.com/lahelahecollectives" target="_blank">@lahelahecollectives</a>
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Art detail view">
+  <div class="lb-backdrop" id="lbBackdrop"></div>
+  <div class="lb-container">
+
+    <!-- Image pane -->
+    <div class="lb-image-pane">
+      <img id="lbImg" src="" alt="">
+      <!-- Prev / Next -->
+      <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="lb-nav lb-next" id="lbNext" aria-label="Next">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <!-- Info panel -->
+    <div class="lb-info">
+      <div class="lb-info-eyebrow">Original Canvas Work</div>
+      <div class="lb-info-style" id="lbStyle"></div>
+      <div class="lb-info-artist" id="lbArtist"></div>
+      <div class="lb-divider"></div>
+      <div class="lb-info-label">Medium</div>
+      <div class="lb-info-value">Hand-painted canvas · 12 × 12 inch</div>
+      <div class="lb-info-label">Art Tradition</div>
+      <div class="lb-info-value" id="lbTradition"></div>
+      <div class="lb-info-label">SKU</div>
+      <div class="lb-info-sku" id="lbSku"></div>
+      <a href="#" class="lb-artist-link" id="lbArtistLink">View Artist <span class="arr">→</span></a>
+      <div class="lb-counter" id="lbCounter"></div>
+    </div>
+
+    <!-- Close -->
+    <button class="lb-close" id="lbClose" aria-label="Close">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+  </div>
+</div>
+
+<script>
+/* ── Custom cursor ── */
+const cursor = document.getElementById('cursor');
+const dot = document.getElementById('cursorDot');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+(function anim(){cx+=(mx-cx)*0.1;cy+=(my-cy)*0.1;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(anim);})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.style.transform='translate(-50%,-50%) scale(2.8)');
+  el.addEventListener('mouseleave',()=>cursor.style.transform='translate(-50%,-50%) scale(1)');
+});
+
+/* ── Mobile nav ── */
+const toggle = document.getElementById('navToggle');
+const mobileNav = document.getElementById('navMobile');
+function closeNav(){toggle.classList.remove('open');mobileNav.style.display='none';mobileNav.classList.remove('open');}
+toggle.addEventListener('click',()=>{
+  if(toggle.classList.contains('open')){closeNav();}
+  else{toggle.classList.add('open');mobileNav.style.display='flex';setTimeout(()=>mobileNav.classList.add('open'),10);}
+});
+
+/* ── SKU-decoded art catalogue ── */
+/*
+  SKU format: LL-CAN-12IN-{STYLE}-{ARTIST_CODE}-{SERIAL}
+  Segments[3] = art style
+  Segments[4] = artist code (AA01–AA08)
+  Segments[5] = serial number
+*/
+
+const STYLE_MAP = {
+  PTCHT: 'Pattachitra',
+  GOND:  'Gond Art',
+  KERM:  'Kerala Mural',
+  PCHWI: 'Pichwai',
+  SRPR:  'Surpur',
+  MDBNI: 'Madhubani',
+  SOHR:  'Sohrai',
+  ALPO:  'Alpona',
+};
+
+const ARTIST_MAP = {
+  AA01: { name: 'Arunima', profile: 'arunima-chakravarty-khadikar.html' },
+  AA02: { name: 'Sakshi Sahu',        profile: 'sakshi-sahu.html' },
+  AA03: { name: 'Nandu S Kumar',      profile: 'nandu-s-kumar.html' },
+  AA04: { name: 'Neetu S Kumar',      profile: 'neetu.html' },
+  AA05: { name: 'Krishnaprakash',     profile: 'krishnaprakash-v-martand.html' },
+  AA06: { name: 'Dinesh Soni',        profile: 'dinesh-soni.html' },
+  AA07: { name: 'Niti Kumar',         profile: 'neeti.html' },
+  AA08: { name: 'Ankita Chakrabarty', profile: 'ankita.html' },
+};
+
+const catalogue = [
+  { sku:'LL-CAN-12IN-PTCHT-AA01-01', url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-PTCHT-AA01-01.jpeg' },
+  { sku:'LL-CAN-12IN-PTCHT-AA01-02', url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-PTCHT-AA01-02.jpeg' },
+  { sku:'LL-CAN-12IN-GOND-AA02-01',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-GOND-AA02-01.png' },
+  { sku:'LL-CAN-12IN-KERM-AA03-01',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-KERM-AA03-01.png' },
+  { sku:'LL-CAN-12IN-KERM-AA04-01',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-KERM-AA04-01.PNG' },
+  { sku:'LL-CAN-12IN-SRPR-AA05-01',  url:'' },
+  { sku:'LL-CAN-12IN-SRPR-AA05-02',  url:'' },
+  { sku:'LL-CAN-12IN-SRPR-AA05-03',  url:'' },
+  { sku:'LL-CAN-12IN-SRPR-AA05-04',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-SRPR-AA05-01.png' },
+  { sku:'LL-CAN-12IN-PCHWI-AA06-01', url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-PCHWI-AA06-01.png' },
+  { sku:'LL-CAN-12IN-PCHWI-AA06-02', url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-PCHWI-AA06-02.png' },
+  { sku:'LL-CAN-12IN-MDBNI-AA07-01', url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-MDBNI-AA07-01.PNG' },
+  { sku:'LL-CAN-12IN-SOHR-AA07-02',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-SOHR-AA07-02.png' },
+  { sku:'LL-CAN-12IN-ALPO-AA08-01',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-ALPO-AA08-01.PNG' },
+];
+
+/* Parse SKU into structured data */
+function parseSKU(sku) {
+  const parts = sku.split('-');
+  // LL-CAN-12IN-STYLE-AAXX-NN  → indices 0,1,2,3,4,5
+  // Note: PTCHT splits cleanly but others too
+  // Re-join from index 3 to handle any style codes
+  const style = parts[3];
+  const artistCode = parts[4];
+  const serial = parts[5];
+  return { style, artistCode, serial };
+}
+
+/* State */
+let activeStyle = 'all';
+let activeArtist = 'all';
+
+/* Filter pill interaction */
+document.querySelectorAll('.pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    const filterType = pill.dataset.filter;
+    const value      = pill.dataset.value;
+
+    /* Update active pill in this group */
+    pill.closest('.filter-pills').querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+
+    if (filterType === 'style')  activeStyle  = value;
+    if (filterType === 'artist') activeArtist = value;
+
+    renderGrid();
+  });
+});
+
+/* Scroll reveal */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold:0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ══════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════ */
+const lightbox  = document.getElementById('lightbox');
+const lbImg     = document.getElementById('lbImg');
+const lbStyle   = document.getElementById('lbStyle');
+const lbArtist  = document.getElementById('lbArtist');
+const lbTrad    = document.getElementById('lbTradition');
+const lbSku     = document.getElementById('lbSku');
+const lbLink    = document.getElementById('lbArtistLink');
+const lbCounter = document.getElementById('lbCounter');
+const lbPrev    = document.getElementById('lbPrev');
+const lbNext    = document.getElementById('lbNext');
+
+let lbItems = [];   // current filtered items WITH images
+let lbIndex = 0;
+
+function openLightbox(index, items) {
+  lbItems = items;
+  lbIndex = index;
+  showLbItem(lbIndex);
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function showLbItem(i) {
+  const item = lbItems[i];
+  const { style, artistCode } = parseSKU(item.sku);
+  const styleName = STYLE_MAP[style] || style;
+  const artist    = ARTIST_MAP[artistCode] || { name: artistCode, profile: '#' };
+
+  /* Fade image swap */
+  lbImg.classList.add('fading');
+  setTimeout(() => {
+    lbImg.src = item.url;
+    lbImg.alt = `${styleName} by ${artist.name}`;
+    lbImg.classList.remove('fading');
+  }, 180);
+
+  lbStyle.textContent   = styleName;
+  lbArtist.textContent  = artist.name;
+  lbTrad.textContent    = styleName;
+  lbSku.textContent     = item.sku;
+  lbLink.href           = artist.profile;
+  lbCounter.textContent = `${i + 1} of ${lbItems.length}`;
+
+  lbPrev.classList.toggle('hidden', i === 0);
+  lbNext.classList.toggle('hidden', i === lbItems.length - 1);
+}
+
+function lbGo(dir) {
+  const next = lbIndex + dir;
+  if (next < 0 || next >= lbItems.length) return;
+  lbIndex = next;
+  showLbItem(lbIndex);
+}
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbBackdrop').addEventListener('click', closeLightbox);
+lbPrev.addEventListener('click', () => lbGo(-1));
+lbNext.addEventListener('click', () => lbGo(1));
+
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowLeft')  lbGo(-1);
+  if (e.key === 'ArrowRight') lbGo(1);
+});
+
+/* Touch swipe on mobile */
+let lbTouchX = null;
+lightbox.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive:true });
+lightbox.addEventListener('touchend',   e => {
+  if (lbTouchX === null) return;
+  const dx = e.changedTouches[0].clientX - lbTouchX;
+  if (Math.abs(dx) > 50) lbGo(dx < 0 ? 1 : -1);
+  lbTouchX = null;
+}, { passive:true });
+
+/* ── INITIAL RENDER ── */
+function renderGrid() {
+  const grid = document.getElementById('artGrid');
+  grid.innerHTML = '';
+
+  const filtered = catalogue.filter(item => {
+    const { style, artistCode } = parseSKU(item.sku);
+    const styleMatch  = activeStyle  === 'all' || style      === activeStyle;
+    const artistMatch = activeArtist === 'all' || artistCode === activeArtist;
+    return styleMatch && artistMatch;
+  });
+
+  document.getElementById('visibleCount').textContent = filtered.length;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">◌</div>
+        <div class="empty-title">No works found</div>
+        <div class="empty-subtitle">Try a different combination of filters</div>
+      </div>`;
+    return;
+  }
+
+  /* Only items with images are lightbox-navigable */
+  const lbEligible = filtered.filter(item => !!item.url);
+
+  filtered.forEach((item, i) => {
+    const { style, artistCode } = parseSKU(item.sku);
+    const styleName = STYLE_MAP[style]  || style;
+    const artist    = ARTIST_MAP[artistCode] || { name: artistCode, profile: '#' };
+    const hasImage  = !!item.url;
+
+    const card = document.createElement('div');
+    card.className = 'art-card';
+    card.style.transitionDelay = (i % 6) * 0.07 + 's';
+
+    /* Add a zoom-hint cursor only for image cards */
+    if (hasImage) card.style.cursor = 'zoom-in';
+
+    card.innerHTML = `
+      <div class="art-card-inner">
+        ${hasImage
+          ? `<img src="${item.url}" alt="${styleName} by ${artist.name}" class="art-photo" loading="lazy">`
+          : `<div class="art-placeholder">
+               <div class="art-placeholder-pattern"></div>
+               <div class="art-placeholder-icon">
+                 <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m8-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+               </div>
+             </div>`
+        }
+        <div class="art-overlay"></div>
+        <div class="art-content">
+          <div class="art-style-tag">${styleName}</div>
+          <h3 class="art-title">${styleName} <em>${artist.name}</em></h3>
+          <div class="art-sku">${item.sku}</div>
+          ${hasImage
+            ? `<div class="art-enquire">Click to view <span class="arr">→</span></div>`
+            : `<a href="${artist.profile}" class="art-enquire">View Artist <span class="arr">→</span></a>`
+          }
+        </div>
+      </div>`;
+
+    /* Lightbox click — only for image cards */
+    if (hasImage) {
+      card.addEventListener('click', () => {
+        const idx = lbEligible.indexOf(item);
+        openLightbox(idx, lbEligible);
+      });
+    }
+
+    grid.appendChild(card);
+    requestAnimationFrame(() => {
+      setTimeout(() => card.classList.add('visible'), i * 60);
+    });
+  });
+}
+
+renderGrid();
+</script>
+</body>
+</html>

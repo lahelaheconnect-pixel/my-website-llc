@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="manifest" href="/site.webmanifest" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="shortcut icon" href="/favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/x-icon" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/apple-touch-icon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Join as Artist — Lahe Lahe Collectives</title>
@@ -240,6 +239,18 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
   .btn-row { flex-direction:column; }
   .btn { text-align:center; }
 }
+
+/* ── Nav dropdown ── */
+.nav-item-blog { position: relative; list-style: none; }
+.nav-item-blog > a { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; position: relative; transition: color 0.3s; }
+.nav-item-blog > a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+.nav-item-blog:hover > a { color: var(--forest); }
+.nav-item-blog:hover > a::after { transform: scaleX(1); }
+.nav-dropdown { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(245,240,232,0.98); backdrop-filter: blur(16px); border: 1px solid rgba(184,134,11,0.2); border-top: 2px solid var(--gold); list-style: none; min-width: 290px; padding: 8px 0; box-shadow: 0 16px 40px rgba(0,0,0,0.1); z-index: 300; opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s; }
+.nav-dropdown::before { content: ''; position: absolute; top: -16px; left: 0; right: 0; height: 16px; }
+.nav-item-blog:hover .nav-dropdown, .nav-item-blog:focus-within .nav-dropdown { opacity: 1; pointer-events: auto; visibility: visible; transform: translateX(-50%) translateY(0); }
+.nav-dropdown li a { display: block; padding: 13px 22px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s, background 0.2s, padding-left 0.2s; white-space: nowrap; border-left: 2px solid transparent; }
+.nav-dropdown li a:hover { color: var(--forest-deep); background: rgba(184,134,11,0.06); padding-left: 28px; border-left-color: var(--gold); }
 </style>
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -253,24 +264,38 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
 <nav>
   <a href="index.html" class="nav-logo-text">Lahe Lahe</a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="artists.html">Artists</a></li>
-    <li><a href="collections.html">Collections</a></li>
+    <li class="nav-item-blog">
+      <a href="collections.html">Collections</a>
+      <ul class="nav-dropdown">
+        <li><a href="collections.html">Collections Overview</a></li>
+        <li><a href="art_gallery.html">Art Gallery</a></li>
+      </ul>
+    </li>
+    <li><a href="artists.html">Artisans</a></li>
     <li><a href="our-story.html">Our Story</a></li>
-    <li><a href="partners.html" class="active">Partners</a></li>
-    <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+    <li><a href="partners.html" class="active">Partner</a></li>
+    <li><a href="https://shop.lahelahe.co.in" target="_blank">Shop</a></li>
+    <li class="nav-item-blog">
+      <a href="">Journal</a>
+      <ul class="nav-dropdown">
+        <li><a href="lahe-lahe-blog-post-01.html">01 &middot; Where Trees Become Tradition</a></li>
+        <li><a href="lahe-lahe-blog-post-02.html">02 &middot; When Rabindranath Met Pattachitra</a></li>
+      </ul>
+    </li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="nav-mobile" id="navMobile">
-  <a href="index.html">Home</a>
-  <a href="artists.html">Artists</a>
-  <a href="collections.html">Collections</a>
-  <a href="our-story.html">Our Story</a>
-  <a href="partners.html">Partners</a>
-  <a href="https://lahelahe.co.in/shop" target="_blank">Shop</a>
+  <a href="collections.html" onclick="closeNav()">Collections</a>
+  <a href="art_gallery.html" onclick="closeNav()">Art Gallery</a>
+  <a href="artists.html" onclick="closeNav()">Artisans</a>
+  <a href="our-story.html" onclick="closeNav()">Our Story</a>
+  <a href="partners.html" onclick="closeNav()">Partner</a>
+  <a href="https://shop.lahelahe.co.in" target="_blank" onclick="closeNav()">Shop</a>
+  <a href="lahe-lahe-blog-post-01.html" onclick="closeNav()">Journal — Post 01</a>
+  <a href="lahe-lahe-blog-post-02.html" onclick="closeNav()">Journal — Post 02</a>
 </div>
 
 <!-- HERO -->
@@ -454,7 +479,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
         </div>
       </div>
       <div class="notif n-warn" id="miss" style="display:none"><span id="missT"></span></div>
-      <div class="notif n-ok" id="appNote" style="display:none">&#10003; An approval request will be sent to <strong><a href="mailto:lahelahe.connect@gmail.com" class="__cf_email__" data-cfemail="fc909d9499909d9499d29f939292999f88bc9b919d9590d29f9391">[email&#160;protected]</a></strong> upon submission.</div>
+      <div class="notif n-ok" id="appNote" style="display:none">&#10003; An approval request will be sent to <strong><a href="mailto:lahelahe.connect@gmail.com">lahelahe.connect@gmail.com</a></strong> upon submission.</div>
       <div class="rcard">
         <div class="rhead"><div class="rhead-title">Curator&#8217;s Note</div></div>
         <div class="rbody"><p class="curator-note" id="cn"></p></div>
@@ -471,8 +496,8 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
   <div class="page" id="p4">
     <div class="step-eyebrow">Step 5 of 5</div>
     <h2 class="step-title">Your Lahe Lahe<br><em>artist page.</em></h2>
-    <p class="step-sub">A preview of your profile on the collective. Once the curator approves, this page will be sent for debut to <strong><a href="mailto:lahelahe.connect@gmail.com" class="__cf_email__" data-cfemail="5438353c3138353c317a373b3a3a313720143339353d387a373b39">[email&#160;protected]</a></strong>.</p>
-    <div class="notif n-ok" style="margin-bottom:20px">&#10003; Approval request sent to <strong><a href="mailto:lahelahe.connect@gmail.com" class="__cf_email__" data-cfemail="0569646d6069646d602b666a6b6b606671456268646c692b666a68">[email&#160;protected]</a></strong> &#8212; we will respond within 3&#8211;5 business days.</div>
+    <p class="step-sub">A preview of your profile on the collective. Once the curator approves, this page will be sent for debut to <strong><a href="mailto:lahelahe.connect@gmail.com">lahelahe.connect@gmail.com</a></strong>.</p>
+    <div class="notif n-ok" style="margin-bottom:20px">&#10003; Approval request sent to <strong><a href="mailto:lahelahe.connect@gmail.com">lahelahe.connect@gmail.com</a></strong> &#8212; we will respond within 3&#8211;5 business days.</div>
     <div class="ap-wrap">
       <div class="ap-nav">
         <div class="ap-nav-logo">Lahe Lahe</div>
@@ -527,7 +552,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
         <li><a href="artists.html">Meet the Artisans</a></li>
         <li><a href="partners.html">Partner With Us</a></li>
         <li><a href="mailto:lahelahe.connect@gmail.com">lahelahe.connect@gmail.com</a></li>
-        <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+        <li><a href="https://shop.lahelahe.co.in" target="_blank">Shop</a></li>
       </ul>
     </div>
   </div>
@@ -547,7 +572,16 @@ let mx=0,my=0,cx=0,cy=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
 (function anim(){cx+=(mx-cx)*0.1;cy+=(my-cy)*0.1;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(anim);})();
 const navToggle=document.getElementById('navToggle'),navMobile=document.getElementById('navMobile');
-navToggle.addEventListener('click',()=>{navToggle.classList.toggle('open');navMobile.style.display=navMobile.style.display==='flex'?'none':'flex';navMobile.classList.toggle('open');});
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.style.transform='translate(-50%,-50%) scale(2.8)');
+  el.addEventListener('mouseleave',()=>cursor.style.transform='translate(-50%,-50%) scale(1)');
+});
+function closeNav(){navToggle.classList.remove('open');navMobile.style.display='none';navMobile.classList.remove('open');}
+navToggle.addEventListener('click',()=>{
+  if(navToggle.classList.contains('open')){closeNav();}
+  else{navToggle.classList.add('open');navMobile.style.display='flex';setTimeout(()=>navMobile.classList.add('open'),10);}
+});
+document.querySelectorAll('.nav-mobile a').forEach(a=>a.addEventListener('click',closeNav));
 const revealEls=document.querySelectorAll('.reveal');
 if(revealEls.length){const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.12});revealEls.forEach(el=>io.observe(el));}
 function go(n){

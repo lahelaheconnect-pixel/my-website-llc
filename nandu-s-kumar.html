@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://bibtsjtpsveadrkxuihr.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpYnRzanRwc3ZlYWRya3h1aWhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5Njg0MTEsImV4cCI6MjA4OTU0NDQxMX0.7r-9EIwHSSmt9CTKKjJy1SdCIO4JNsFmEYPnDttIvkA';
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
+
+<link rel="icon" type="image/x-icon" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/apple-touch-icon.png">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nandu S Kumar — Lahe Lahe Collectives</title>
@@ -20,6 +32,88 @@ body{background:var(--cream);color:var(--ink);font-family:'Cormorant Garamond',s
 @media(pointer:fine){body{cursor:none;}.cursor,.cursor-dot{display:block;}}
 .cursor{display:none;width:14px;height:14px;border:1.5px solid var(--forest);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.25s ease;}
 .cursor-dot{display:none;width:4px;height:4px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+
+/* ── Blog dropdown — smooth fade ── */
+.nav-item-blog {
+  position: relative;
+  list-style: none;
+}
+.nav-item-blog > a {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-item-blog > a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.nav-item-blog:hover > a { color: var(--forest); }
+.nav-item-blog:hover > a::after { transform: scaleX(1); }
+
+/* ── Dropdown: opacity fade + slide down ── */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: rgba(245, 240, 232, 0.98);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(184, 134, 11, 0.2);
+  border-top: 2px solid var(--gold);
+  list-style: none;
+  min-width: 290px;
+  padding: 8px 0;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
+}
+.nav-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 0; right: 0;
+  height: 16px;
+}
+.nav-item-blog:hover .nav-dropdown,
+.nav-item-blog:focus-within .nav-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown li a {
+  display: block;
+  padding: 13px 22px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s, background 0.2s, padding-left 0.2s;
+  white-space: nowrap;
+  border-left: 2px solid transparent;
+}
+.nav-dropdown li a:hover {
+  color: var(--forest-deep);
+  background: rgba(184, 134, 11, 0.06);
+  padding-left: 28px;
+  border-left-color: var(--gold);
+}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:18px 60px;}
 nav::before{content:'';position:absolute;inset:0;background:rgba(245,240,232,0.95);backdrop-filter:blur(16px);z-index:-1;border-bottom:1px solid rgba(184,134,11,0.18);}
@@ -164,6 +258,273 @@ footer::before{content:'';position:absolute;top:0;left:60px;right:60px;height:1p
   .band{margin-top:40px;}
 }
 </style>
+<style id="ll-gallery-styles">
+/* Lahe Lahe gallery — injected by converter v4 (layout: masonry) */
+
+.works-grid {
+  columns: 3;
+  column-gap: 20px;
+  padding: 0;
+}
+@media (max-width:900px) { .works-grid { columns: 2; } }
+@media (max-width:560px) { .works-grid { columns: 1; } }
+.work-card {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+}
+.work-card img.work-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.work-card { cursor: zoom-in; }
+.work-card:hover img.work-img { transform: scale(1.07); }
+.work-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.work-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,20,10,0.92) 0%, rgba(10,20,10,0.25) 55%, transparent 85%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.work-card:hover .work-overlay { opacity: 1; }
+.work-card-inner::after {
+  content: '';
+  position: absolute; inset: 12px;
+  border: 1px solid rgba(184,134,11,0);
+  pointer-events: none; z-index: 3;
+  transition: border-color 0.5s ease;
+}
+.work-card:hover .work-card-inner::after { border-color: rgba(184,134,11,0.38); }
+.work-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 18px;
+  transform: translateY(7px);
+  opacity: 0;
+  transition: all 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.work-card:hover .work-info { transform: translateY(0); opacity: 1; }
+.work-style-tag {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 7.5px;
+  letter-spacing: 0.45em;
+  color: #D4A843;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.work-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(16px, 1.6vw, 22px);
+  color: #F5F0E8;
+  line-height: 1.15;
+}
+.work-sku {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 7.5px;
+  letter-spacing: 0.3em;
+  color: rgba(245,240,232,0.4);
+  margin-top: 8px;
+  display: flex; align-items: center; gap: 10px;
+}
+.work-sku::before { content: ''; width: 16px; height: 1px; background: rgba(184,134,11,0.4); }
+.work-view-hint {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 11px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 12px; font-style: italic;
+  color: #D4A843;
+  border-bottom: 1px solid rgba(184,134,11,0);
+  padding-bottom: 2px;
+  transition: border-bottom-color 0.3s;
+}
+.work-card:hover .work-view-hint { border-bottom-color: rgba(184,134,11,0.4); }
+.work-view-hint .arr { transition: transform 0.3s; display: inline-block; }
+.work-card:hover .work-view-hint .arr { transform: translateX(4px); }
+
+.works-empty {
+  font-family: 'EB Garamond', 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: #8B7355;
+  padding: 60px 0;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* ══════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════ */
+.ll-lightbox {
+  position: fixed; inset: 0; z-index: 9000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.ll-lightbox.open { opacity: 1; pointer-events: all; }
+
+.ll-lb-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(10,20,10,0.96);
+  backdrop-filter: blur(18px);
+  cursor: zoom-out;
+}
+
+.ll-lb-container {
+  position: relative; z-index: 1;
+  display: flex; align-items: stretch;
+  max-width: 1180px; width: calc(100% - 40px);
+  max-height: calc(100vh - 60px);
+  transform: scale(0.94) translateY(16px);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.7);
+}
+.ll-lightbox.open .ll-lb-container { transform: scale(1) translateY(0); }
+
+.ll-lb-image-pane {
+  flex: 1; min-width: 0;
+  background: #0a140a;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.ll-lb-image-pane img {
+  max-width: 100%; max-height: calc(100vh - 60px);
+  object-fit: contain; display: block;
+  transition: opacity 0.3s ease;
+  user-select: none; -webkit-user-drag: none;
+}
+.ll-lb-image-pane img.ll-fading { opacity: 0; }
+
+.ll-lb-info {
+  width: 300px; flex-shrink: 0;
+  background: #F5F0E8;
+  padding: 44px 30px 32px;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.ll-lb-eyebrow {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 8px; letter-spacing: 0.55em;
+  color: #B8860B; margin-bottom: 18px;
+  display: flex; align-items: center; gap: 12px;
+  text-transform: uppercase;
+}
+.ll-lb-eyebrow::before { content: ''; width: 22px; height: 1px; background: rgba(184,134,11,0.5); }
+.ll-lb-style {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(22px, 2.4vw, 30px); font-weight: 300;
+  color: #1A3D1C; line-height: 1.1; margin-bottom: 5px;
+}
+.ll-lb-artist {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic; font-size: 16px;
+  color: #B8860B; margin-bottom: 26px;
+}
+.ll-lb-divider { height: 1px; background: rgba(184,134,11,0.2); margin-bottom: 22px; }
+.ll-lb-label {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 7.5px; letter-spacing: 0.5em;
+  color: #6B6050; margin-bottom: 5px;
+  text-transform: uppercase;
+}
+.ll-lb-value {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 12px; color: #1C1C1C;
+  letter-spacing: 0.04em; margin-bottom: 18px;
+}
+.ll-lb-sku {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 9px; color: #6B6050;
+  letter-spacing: 0.15em; margin-bottom: 28px;
+  padding: 10px 14px;
+  background: #EDE6D6;
+  border-left: 2px solid rgba(184,134,11,0.35);
+}
+.ll-lb-actions { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+.ll-lb-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 9px; letter-spacing: 0.3em;
+  text-decoration: none; text-transform: uppercase;
+  border-bottom: 1px solid; padding-bottom: 4px;
+  transition: color 0.3s, border-color 0.3s;
+  width: fit-content;
+}
+.ll-lb-link.artist {
+  color: #1A3D1C; border-color: rgba(44,95,46,0.25);
+}
+.ll-lb-link.artist:hover { color: #B8860B; border-color: rgba(184,134,11,0.5); }
+.ll-lb-link.shop {
+  color: #B8860B; border-color: rgba(184,134,11,0.35);
+}
+.ll-lb-link.shop:hover { color: #1A3D1C; border-color: rgba(44,95,46,0.5); }
+.ll-lb-link .arr { transition: transform 0.3s; display: inline-block; }
+.ll-lb-link:hover .arr { transform: translateX(4px); }
+.ll-lb-counter {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 8px; letter-spacing: 0.4em;
+  color: #6B6050; margin-top: 18px;
+}
+
+.ll-lb-close {
+  position: absolute; top: 16px; right: 16px; z-index: 10;
+  width: 40px; height: 40px;
+  border: 1px solid rgba(184,134,11,0.3);
+  background: rgba(10,20,10,0.7);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.3s, background 0.3s;
+  padding: 0;
+}
+.ll-lb-close:hover { border-color: rgba(184,134,11,0.7); background: rgba(184,134,11,0.12); }
+.ll-lb-close svg { width: 16px; height: 16px; stroke: #F5F0E8; fill: none; stroke-width: 1.5; stroke-linecap: round; }
+
+.ll-lb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px;
+  border: 1px solid rgba(245,240,232,0.15);
+  background: rgba(10,20,10,0.6);
+  cursor: pointer; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.3s, background 0.3s;
+  padding: 0;
+}
+.ll-lb-nav:hover { border-color: rgba(184,134,11,0.55); background: rgba(184,134,11,0.12); }
+.ll-lb-nav svg { width: 18px; height: 18px; stroke: #F5F0E8; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ll-lb-prev { left: 16px; }
+.ll-lb-next { right: 16px; }
+.ll-lb-nav.ll-hidden { opacity: 0; pointer-events: none; }
+
+@media (max-width: 768px) {
+  .ll-lb-container { flex-direction: column; max-height: calc(100vh - 20px); width: calc(100% - 20px); }
+  .ll-lb-image-pane { max-height: 52vh; }
+  .ll-lb-image-pane img { max-height: 52vh; }
+  .ll-lb-info { width: 100%; padding: 20px 20px 24px; flex-direction: row; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+  .ll-lb-eyebrow { display: none; }
+  .ll-lb-style { font-size: 20px; margin-bottom: 2px; }
+  .ll-lb-artist { font-size: 14px; margin-bottom: 0; }
+  .ll-lb-divider { display: none; }
+  .ll-lb-sku { margin-bottom: 0; }
+  .ll-lb-counter { margin-top: 0; }
+  .ll-lb-actions { flex-direction: row; flex-wrap: wrap; margin-top: 0; }
+  .ll-lb-nav { display: none; }
+}
+</style>
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -172,22 +533,38 @@ footer::before{content:'';position:absolute;top:0;left:60px;right:60px;height:1p
 <nav>
   <a href="index.html" class="nav-logo-text">Lahe Lahe</a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="artists.html">Artists</a></li>
-    <li><a href="collections.html">Collections</a></li>
+    <li class="nav-item-blog">
+      <a href="collections.html">Collections</a>
+      <ul class="nav-dropdown">
+        <li><a href="collections.html">Collections Overview</a></li>
+        <li><a href="art_gallery.html">Art Gallery</a></li>
+      </ul>
+    </li>
+    <li><a href="artists.html">Artisans</a></li>
     <li><a href="our-story.html">Our Story</a></li>
-    <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+    <li><a href="partners.html">Partner</a></li>
+    <li><a href="https://shop.lahelahe.co.in" target="_blank">Shop</a></li>
+    <li class="nav-item-blog">
+      <a href="">Journal</a>
+      <ul class="nav-dropdown">
+        <li><a href="lahe-lahe-blog-post-01.html">01 · Where Trees Become Tradition</a></li>
+        <li><a href="lahe-lahe-blog-post-02.html">02 · When Rabindranath Met Pattachitra</a></li>
+      </ul>
+    </li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="nav-mobile" id="navMobile">
-  <a href="index.html">Home</a>
-  <a href="artists.html">Artists</a>
-  <a href="collections.html">Collections</a>
-  <a href="our-story.html">Our Story</a>
-  <a href="https://lahelahe.co.in/shop" target="_blank">Shop</a>
+  <a href="collections.html" onclick="closeNav()">Collections</a>
+  <a href="art_gallery.html" onclick="closeNav()">Art Gallery</a>
+  <a href="artists.html" onclick="closeNav()">Artisans</a>
+  <a href="our-story.html" onclick="closeNav()">Our Story</a>
+  <a href="partners.html" onclick="closeNav()">Partner</a>
+  <a href="https://shop.lahelahe.co.in" target="_blank" onclick="closeNav()">Shop</a>
+  <a href="lahe-lahe-blog-post-01.html" onclick="closeNav()">Journal — Post 01</a>
+  <a href="lahe-lahe-blog-post-02.html" onclick="closeNav()">Journal — Post 02</a>
 </div>
 
 <div class="breadcrumb">
@@ -202,8 +579,8 @@ footer::before{content:'';position:absolute;top:0;left:60px;right:60px;height:1p
 <section class="artist-hero">
   <div class="artist-hero-photo-col">
     <div class="artist-hero-photo-wrap">
-		<img src="nandu.jpeg"          
-		  alt="Nandu S Kumar — Architect &amp; Kerala Mural Artist"
+      <img src="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Artists/nandu.jpeg"
+           alt="Arunima Chakravarty Khadikar — Architect, Educator & Artist"
            class="artist-hero-img"
            loading="eager" decoding="async" fetchpriority="high">
     </div>
@@ -228,7 +605,7 @@ footer::before{content:'';position:absolute;top:0;left:60px;right:60px;height:1p
       </div>
     </div>
     <div class="artist-hero-cta">
-      <a href="https://lahelahe.co.in/shop" target="_blank" class="btn-primary"><span>Shop Her Works</span></a>
+      <a href="https://shop.lahelahe.co.in" target="_blank" class="btn-primary"><span>Shop Her Works</span></a>
       <a href="artists.html" class="btn-ghost">All Artisans <span class="arr">&rarr;</span></a>
     </div>
   </div>
@@ -299,6 +676,16 @@ footer::before{content:'';position:absolute;top:0;left:60px;right:60px;height:1p
   </div>
 </section>
 
+<!-- WORKS -->
+<section class="works-section" style="background:var(--cream);padding:80px 60px 100px;">
+  <div class="works-header reveal" style="margin-bottom:48px;">
+    <div class="section-eyebrow">Works</div>
+    <h2 class="section-title">Nandu's <em>The Collection</em></h2>
+  </div>
+  <div class="works-grid" id="works-grid-container">
+  </div>
+</section>
+
 <!-- BACK -->
 <div class="back-section">
   <div class="back-inner">
@@ -320,7 +707,7 @@ footer::before{content:'';position:absolute;top:0;left:60px;right:60px;height:1p
       <ul class="footer-links">
         <li><a href="#">Kerala Mural Collection</a></li>
         <li><a href="#">Pattachitra Collection</a></li>
-        <li><a href="#">Madhubani Collection</a></li>
+        <li><a href="#">Pichwai Collection</a></li>
         <li><a href="#">Gond Art Collection</a></li>
         <li><a href="#">Gift a Tradition</a></li>
         <li><a href="#">Custom Orders</a></li>
@@ -332,7 +719,8 @@ footer::before{content:'';position:absolute;top:0;left:60px;right:60px;height:1p
         <li><a href="our-story.html">Our Story</a></li>
         <li><a href="artists.html">Meet the Artisans</a></li>
         <li><a href="#">Partner With Us</a></li>
-        <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+        <li><a href="mailto:lahelahe.connect@gmail.com">lahelahe.connect@gmail.com</a></li>
+        <li><a href="https://shop.lahelahe.co.in" target="_blank">Shop</a></li>
       </ul>
     </div>
   </div>
@@ -363,6 +751,214 @@ toggle.addEventListener('click',()=>{
 document.querySelectorAll('.nav-mobile a').forEach(a=>a.addEventListener('click',closeNav));
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.15});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+
+<!-- LIGHTBOX — Lahe Lahe gallery -->
+<div class="ll-lightbox" id="llLightbox" role="dialog" aria-modal="true" aria-label="Artwork detail">
+  <div class="ll-lb-backdrop" id="llBackdrop"></div>
+  <div class="ll-lb-container">
+    <div class="ll-lb-image-pane">
+      <img id="llImg" src="" alt="">
+      <button class="ll-lb-nav ll-lb-prev ll-hidden" id="llPrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="ll-lb-nav ll-lb-next ll-hidden" id="llNext" aria-label="Next">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <div class="ll-lb-info">
+      <div class="ll-lb-eyebrow">Original Canvas Work</div>
+      <div class="ll-lb-style"  id="llStyle"></div>
+      <div class="ll-lb-artist" id="llArtist"></div>
+      <div class="ll-lb-divider"></div>
+      <div class="ll-lb-label">Medium</div>
+      <div class="ll-lb-value">Hand-painted canvas · 38 × 42 cm</div>
+      <div class="ll-lb-label">Art Tradition</div>
+      <div class="ll-lb-value" id="llTradition"></div>
+      <div class="ll-lb-label">SKU</div>
+      <div class="ll-lb-sku" id="llSku"></div>
+      <div class="ll-lb-actions">
+        <a href="#" class="ll-lb-link artist" id="llArtistLink" target="_blank">
+          View Artist <span class="arr">→</span>
+        </a>
+        <a href="https://shop.lahelahe.co.in/products/aesthetic-indian-heritage-craft-canvas-tote-bag-kerala-mural-art-by-nandu-ll-can-12in-kerm-aa01-01?sku_id=62176046" class="ll-lb-link shop" target="_blank">
+          Shop This Piece <span class="arr">→</span>
+        </a>
+      </div>
+      <div class="ll-lb-counter" id="llCounter"></div>
+    </div>
+    <button class="ll-lb-close" id="llClose" aria-label="Close lightbox">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+</div>
+<script>
+(function() {
+  'use strict';
+
+  /* ── Nandu S Kumar — Artworks (from Supabase URL mapping) ── */
+  var ARTWORKS = [
+    {
+      imageUrl: 'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-KERM-AA03-01.png',
+      sku:      'LL-CAN-12IN-KERM-AA03-01',
+      title:    'Kerala Mural',
+      style:    'Kerala Mural',
+      artist:   'Nandu S Kumar'
+    }
+  ];
+
+  /* ── Artist + style maps (for lightbox) ── */
+  var ARTIST_MAP = {
+    "AA01":{"name":"Arunima Chakravarty Khadikar","craft":"Pattachitra","profile":"arunima-chakravarty-khadikar.html"},
+    "AA02":{"name":"Sakshi Sahu","craft":"Gond Art","profile":"sakshi-sahu.html"},
+    "AA03":{"name":"Nandu S Kumar","craft":"Kerala Mural","profile":"nandu-s-kumar.html"},
+    "AA04":{"name":"Neetu S Kumar","craft":"Kerala Mural","profile":"neetu.html"},
+    "AA05":{"name":"Krishnaprakash V Martand","craft":"Surpur","profile":"krishnaprakash-v-martand.html"},
+    "AA06":{"name":"Dinesh Soni","craft":"Pichwai","profile":"dinesh-soni.html"},
+    "AA07":{"name":"Niti Kumar","craft":"Madhubani","profile":"neeti.html"},
+    "AA08":{"name":"Ankita Chakrabarty","craft":"Alpona","profile":"ankita-chakrabarty.html"}
+  };
+  var STYLE_MAP = {
+    "PTCHT":"Pattachitra","GOND":"Gond Art","KERM":"Kerala Mural",
+    "PCHWI":"Pichwai","SRPR":"Surpur","MDBNI":"Madhubani","SOHR":"Sohrai","ALPO":"Alpona"
+  };
+
+  function parseSKU(sku) {
+    var p = (sku || '').split('-');
+    return { style: p[3] || '', artistCode: p[4] || '' };
+  }
+
+  /* ── Lightbox ── */
+  var lbItems = [], lbIndex = 0;
+  var lightbox  = document.getElementById('llLightbox');
+  var lbImg     = document.getElementById('llImg');
+  var lbStyle   = document.getElementById('llStyle');
+  var lbArtist  = document.getElementById('llArtist');
+  var lbTrad    = document.getElementById('llTradition');
+  var lbSku     = document.getElementById('llSku');
+  var lbLink    = document.getElementById('llArtistLink');
+  var lbCounter = document.getElementById('llCounter');
+  var lbPrev    = document.getElementById('llPrev');
+  var lbNext    = document.getElementById('llNext');
+
+  function openLightbox(index, items) {
+    lbItems = items; lbIndex = index;
+    showLbItem(lbIndex);
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function showLbItem(i) {
+    var item = lbItems[i];
+    var parsed     = parseSKU(item.sku);
+    var styleName  = STYLE_MAP[parsed.style] || item.style || '—';
+    var artistData = ARTIST_MAP[parsed.artistCode] || { name: item.artist || '—', craft: styleName, profile: '#' };
+
+    lbImg.classList.add('ll-fading');
+    setTimeout(function() {
+      lbImg.src = item.imageUrl;
+      lbImg.alt = styleName + ' by ' + artistData.name;
+      lbImg.classList.remove('ll-fading');
+    }, 180);
+
+    lbStyle.textContent   = styleName;
+    lbArtist.textContent  = artistData.name;
+    lbTrad.textContent    = artistData.craft || styleName;
+    lbSku.textContent     = item.sku || '—';
+    lbLink.href           = artistData.profile;
+    lbCounter.textContent = (i + 1) + ' of ' + lbItems.length;
+    lbPrev.classList.toggle('ll-hidden', i === 0);
+    lbNext.classList.toggle('ll-hidden', i === lbItems.length - 1);
+  }
+  function lbGo(dir) {
+    var next = lbIndex + dir;
+    if (next < 0 || next >= lbItems.length) return;
+    lbIndex = next; showLbItem(lbIndex);
+  }
+
+  document.getElementById('llClose').addEventListener('click', closeLightbox);
+  document.getElementById('llBackdrop').addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', function() { lbGo(-1); });
+  lbNext.addEventListener('click', function() { lbGo(1); });
+  document.addEventListener('keydown', function(e) {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  lbGo(-1);
+    if (e.key === 'ArrowRight') lbGo(1);
+  });
+  var lbTouchX = null;
+  lightbox.addEventListener('touchstart', function(e) { lbTouchX = e.touches[0].clientX; }, { passive:true });
+  lightbox.addEventListener('touchend',   function(e) {
+    if (lbTouchX === null) return;
+    var dx = e.changedTouches[0].clientX - lbTouchX;
+    if (Math.abs(dx) > 50) lbGo(dx < 0 ? 1 : -1);
+    lbTouchX = null;
+  }, { passive:true });
+
+  /* ── Render gallery ── */
+  document.addEventListener('DOMContentLoaded', function() {
+    var container = document.getElementById('works-grid-container');
+    if (!container) return;
+
+    var lbEligible = ARTWORKS.filter(function(w) { return !!w.imageUrl; });
+
+    container.innerHTML = ARTWORKS.map(function(work) {
+      var hasImg    = !!work.imageUrl;
+      var lbIdx     = lbEligible.indexOf(work);
+      var styleName = STYLE_MAP[parseSKU(work.sku).style] || work.style || '';
+
+      return [
+        '<div class="work-card" data-lb-index="' + lbIdx + '" style="cursor:' + (hasImg ? 'zoom-in' : 'default') + '">',
+          '<div class="work-card-inner">',
+            hasImg
+              ? '<img src="' + work.imageUrl + '" alt="' + (work.title || styleName) + '" class="work-img" loading="lazy">'
+              : '<div style="width:100%;height:100%;background:linear-gradient(160deg,#1A3D1C,#2C5F2E);display:flex;align-items:center;justify-content:center;"><svg width=24 height=24 viewBox="0 0 24 24" fill=none stroke="rgba(245,240,232,0.3)" stroke-width=1><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m8-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></div>',
+            '<div class="work-overlay"></div>',
+            '<div class="work-info">',
+              (styleName ? '<div class="work-style-tag">' + styleName + '</div>' : ''),
+              '<div class="work-title">' + (work.title || styleName) + '</div>',
+              (work.sku ? '<div class="work-sku">' + work.sku + '</div>' : ''),
+              (hasImg ? '<div class="work-view-hint">View work <span class="arr">→</span></div>' : ''),
+            '</div>',
+          '</div>',
+        '</div>'
+      ].join('');
+    }).join('');
+
+    /* Attach lightbox clicks */
+    container.querySelectorAll('.work-card').forEach(function(card) {
+      var idx = parseInt(card.getAttribute('data-lb-index'), 10);
+      if (idx < 0 || idx >= lbEligible.length) return;
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        openLightbox(idx, lbEligible);
+      });
+    });
+
+    /* Scroll reveal */
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'none';
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      container.querySelectorAll('.work-card').forEach(function(c, i) {
+        c.style.opacity = '0';
+        c.style.transform = 'translateY(20px)';
+        c.style.transition = 'opacity 0.6s ease ' + (i * 0.08) + 's, transform 0.6s ease ' + (i * 0.08) + 's';
+        io.observe(c);
+      });
+    }
+  });
+
+})();
 </script>
 </body>
 </html>
