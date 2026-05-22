@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="manifest" href="/site.webmanifest" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/x-icon" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/apple-touch-icon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collections — Lahe Lahe Collectives</title>
+<title>Art Gallery — Lahe Lahe Collectives</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -328,6 +327,18 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
   .footer-grid { grid-template-columns:1fr;gap:32px; }
 }
 @media (max-width:480px) { .art-grid { grid-template-columns:1fr; } }
+
+/* ── Nav dropdown ── */
+.nav-item-blog { position: relative; list-style: none; }
+.nav-item-blog > a { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; position: relative; transition: color 0.3s; }
+.nav-item-blog > a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+.nav-item-blog:hover > a { color: var(--forest); }
+.nav-item-blog:hover > a::after { transform: scaleX(1); }
+.nav-dropdown { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(-6px); background: rgba(245,240,232,0.98); backdrop-filter: blur(16px); border: 1px solid rgba(184,134,11,0.2); border-top: 2px solid var(--gold); list-style: none; min-width: 290px; padding: 8px 0; box-shadow: 0 16px 40px rgba(0,0,0,0.1); z-index: 300; opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s; }
+.nav-dropdown::before { content: ''; position: absolute; top: -16px; left: 0; right: 0; height: 16px; }
+.nav-item-blog:hover .nav-dropdown, .nav-item-blog:focus-within .nav-dropdown { opacity: 1; pointer-events: auto; visibility: visible; transform: translateX(-50%) translateY(0); }
+.nav-dropdown li a { display: block; padding: 13px 22px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s, background 0.2s, padding-left 0.2s; white-space: nowrap; border-left: 2px solid transparent; }
+.nav-dropdown li a:hover { color: var(--forest-deep); background: rgba(184,134,11,0.06); padding-left: 28px; border-left-color: var(--gold); }
 </style>
 </head>
 <body>
@@ -338,29 +349,44 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
 <nav>
   <a href="index.html" class="nav-logo-text">Lahe Lahe</a>
   <ul class="nav-links">
-    <li><a href="collections.html" class="active">Collections</a></li>
+    <li class="nav-item-blog">
+      <a href="collections.html" class="active">Collections</a>
+      <ul class="nav-dropdown">
+        <li><a href="collections.html">Collections Overview</a></li>
+        <li><a href="art_gallery.html">Art Gallery</a></li>
+      </ul>
+    </li>
     <li><a href="artists.html">Artisans</a></li>
     <li><a href="our-story.html">Our Story</a></li>
     <li><a href="partners.html">Partner</a></li>
-    <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+    <li><a href="https://shop.lahelahe.co.in" target="_blank">Shop</a></li>
+    <li class="nav-item-blog">
+      <a href="">Journal</a>
+      <ul class="nav-dropdown">
+        <li><a href="lahe-lahe-blog-post-01.html">01 &middot; Where Trees Become Tradition</a></li>
+        <li><a href="lahe-lahe-blog-post-02.html">02 &middot; When Rabindranath Met Pattachitra</a></li>
+      </ul>
+    </li>
   </ul>
   <button class="nav-toggle" id="navToggle" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
-
 <div class="nav-mobile" id="navMobile">
-  <a href="collections.html">Collections</a>
-  <a href="artists.html">Artisans</a>
-  <a href="our-story.html">Our Story</a>
-  <a href="partners.html">Partner</a>
-  <a href="https://lahelahe.co.in/shop" target="_blank">Shop</a>
+  <a href="collections.html" onclick="closeNav()">Collections</a>
+  <a href="art_gallery.html" onclick="closeNav()">Art Gallery</a>
+  <a href="artists.html" onclick="closeNav()">Artisans</a>
+  <a href="our-story.html" onclick="closeNav()">Our Story</a>
+  <a href="partners.html" onclick="closeNav()">Partner</a>
+  <a href="https://shop.lahelahe.co.in" target="_blank" onclick="closeNav()">Shop</a>
+  <a href="lahe-lahe-blog-post-01.html" onclick="closeNav()">Journal — Post 01</a>
+  <a href="lahe-lahe-blog-post-02.html" onclick="closeNav()">Journal — Post 02</a>
 </div>
 
 <!-- HERO -->
 <section class="page-hero">
   <div style="max-width:720px">
-    <div class="page-eyebrow">14 Works · 8 Artisans · 8 Traditions</div>
+    <div class="page-eyebrow">21 Works · 9 Artisans · 9 Traditions</div>
     <h1 class="page-title">The<br><em>Collection.</em></h1>
     <p class="page-subtitle">Each canvas carries centuries of visual language — hand-painted by master artisans across India's living craft traditions.</p>
   </div>
@@ -406,6 +432,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
         <button class="pill" data-filter="style" data-value="MDBNI">Madhubani</button>
         <button class="pill" data-filter="style" data-value="SOHR">Sohrai</button>
         <button class="pill" data-filter="style" data-value="ALPO">Alpona</button>
+        <button class="pill" data-filter="style" data-value="MNDL">Mandala</button>
       </div>
     </div>
 
@@ -423,6 +450,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
         <button class="pill" data-filter="artist" data-value="AA06">Dinesh Soni</button>
         <button class="pill" data-filter="artist" data-value="AA07">Niti Kumar</button>
         <button class="pill" data-filter="artist" data-value="AA08">Ankita</button>
+        <button class="pill" data-filter="artist" data-value="AA09">Radhika</button>
       </div>
     </div>
 
@@ -450,7 +478,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
       <h2 class="bridge-title">A tradition<br>made <em>for you.</em></h2>
       <p class="bridge-body">Work directly with our artisans to commission a bespoke canvas. Every piece tells a story — yours can too.</p>
     </div>
-    <a href="https://lahelahe.co.in/shop" target="_blank" class="bridge-cta reveal"><span>Enquire Now</span></a>
+    <a href="https://shop.lahelahe.co.in" target="_blank" class="bridge-cta reveal"><span>Enquire Now</span></a>
   </div>
 </div>
 
@@ -469,7 +497,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
         <li><a href="artists.html">Meet the Artisans</a></li>
         <li><a href="our-story.html">Our Story</a></li>
         <li><a href="partners.html">Partner With Us</a></li>
-        <li><a href="https://lahelahe.co.in/shop" target="_blank">Shop</a></li>
+        <li><a href="https://shop.lahelahe.co.in" target="_blank">Shop</a></li>
       </ul>
     </div>
     <div>
@@ -552,7 +580,7 @@ toggle.addEventListener('click',()=>{
   else{toggle.classList.add('open');mobileNav.style.display='flex';setTimeout(()=>mobileNav.classList.add('open'),10);}
 });
 
-/* ── SKU-decoded art catalogue ── */
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
 /*
   SKU format: LL-CAN-12IN-{STYLE}-{ARTIST_CODE}-{SERIAL}
   Segments[3] = art style
@@ -569,18 +597,21 @@ const STYLE_MAP = {
   MDBNI: 'Madhubani',
   SOHR:  'Sohrai',
   ALPO:  'Alpona',
+  MNDL:  'Mandala',
 };
 
 const ARTIST_MAP = {
-  AA01: { name: 'Arunima', profile: 'arunima-chakravarty-khadikar.html' },
+  AA01: { name: 'Arunima Chakravarty Khadikar', profile: 'arunima-chakravarty-khadikar.html' },
   AA02: { name: 'Sakshi Sahu',        profile: 'sakshi-sahu.html' },
   AA03: { name: 'Nandu S Kumar',      profile: 'nandu-s-kumar.html' },
   AA04: { name: 'Neetu S Kumar',      profile: 'neetu.html' },
-  AA05: { name: 'Krishnaprakash',     profile: 'krishnaprakash-v-martand.html' },
+  AA05: { name: 'Krishnaprakash V Martand',     profile: 'krishnaprakash-v-martand.html' },
   AA06: { name: 'Dinesh Soni',        profile: 'dinesh-soni.html' },
   AA07: { name: 'Niti Kumar',         profile: 'neeti.html' },
-  AA08: { name: 'Ankita Chakrabarty', profile: 'ankita.html' },
+  AA08: { name: 'Ankita Chakrabarty', profile: 'ankita-chakrabarty.html' },
+  AA09: { name: 'Radhika Goel',       profile: 'radhika-goel.html' },
 };
+
 
 const catalogue = [
   { sku:'LL-CAN-12IN-PTCHT-AA01-01', url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-PTCHT-AA01-01.jpeg' },
