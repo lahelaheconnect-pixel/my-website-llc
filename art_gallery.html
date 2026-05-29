@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/x-icon" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/banner/Favicon/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="shortcut icon" href="/favicon.ico">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Art Gallery — Lahe Lahe Collectives</title>
@@ -433,6 +434,7 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
         <button class="pill" data-filter="style" data-value="SOHR">Sohrai</button>
         <button class="pill" data-filter="style" data-value="ALPO">Alpona</button>
         <button class="pill" data-filter="style" data-value="MNDL">Mandala</button>
+		<button class="pill" data-filter="style" data-value="CHTRA">Hase Chittara</button>
       </div>
     </div>
 
@@ -451,6 +453,8 @@ footer::before { content:'';position:absolute;top:0;left:60px;right:60px;height:
         <button class="pill" data-filter="artist" data-value="AA07">Niti Kumar</button>
         <button class="pill" data-filter="artist" data-value="AA08">Ankita</button>
         <button class="pill" data-filter="artist" data-value="AA09">Radhika</button>
+		<button class="pill" data-filter="artist" data-value="AA10">Nilam & Sanjeev</button>
+		<button class="pill" data-filter="artist" data-value="AA11">Nanditha TM</button>
       </div>
     </div>
 
@@ -598,6 +602,7 @@ const STYLE_MAP = {
   SOHR:  'Sohrai',
   ALPO:  'Alpona',
   MNDL:  'Mandala',
+  CHTRA: 'Hase Chittara' 
 };
 
 const ARTIST_MAP = {
@@ -610,6 +615,8 @@ const ARTIST_MAP = {
   AA07: { name: 'Niti Kumar',         profile: 'neeti.html' },
   AA08: { name: 'Ankita Chakrabarty', profile: 'ankita-chakrabarty.html' },
   AA09: { name: 'Radhika Goel',       profile: 'radhika-goel.html' },
+  AA10: { name: 'Nilam & Sanjeev',       profile: 'nilam-sanjeev.html' },
+  AA11: { name: 'Nanditha TM',       profile: 'nanditha.html' },
 };
 
 
@@ -628,6 +635,18 @@ const catalogue = [
   { sku:'LL-CAN-12IN-MDBNI-AA07-01', url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-MDBNI-AA07-01.PNG' },
   { sku:'LL-CAN-12IN-SOHR-AA07-02',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-SOHR-AA07-02.png' },
   { sku:'LL-CAN-12IN-ALPO-AA08-01',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-ALPO-AA08-01.PNG' },
+  { sku:'LL-CAN-12IN-MAND-AA09-01',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-MAND-AA09-01.jpeg' },
+  { sku:'LL-CAN-12IN-MDBNI-AA10-01',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-MDBNI-AA10-01.jpeg' },
+  { sku:'LL-CAN-12IN-MDBNI-AA10-02',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-MDBNI-AA10-02.jpeg' },
+  { sku:'LL-CAN-12IN-MDBNI-AA10-03',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-MDBNI-AA10-03.jpeg' }, 
+  { sku:'LL-CAN-12IN-MDBNI-AA10-04',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-MDBNI-AA10-04.png' },
+  { sku:'LL-CAN-12IN-MDBNI-AA10-05',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-MDBNI-AA10-05.png' },
+  { sku:'LL-CAN-12IN-CHTRA-AA11-01',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-CHTRA-AA11-01.jpeg' },
+  { sku:'LL-CAN-12IN-CHTRA-AA11-02',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-CHTRA-AA11-02.jpeg' },
+  { sku:'LL-CAN-12IN-CHTRA-AA11-03',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-CHTRA-AA11-03.jpeg' },
+  { sku:'LL-CAN-12IN-CHTRA-AA11-04',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-CHTRA-AA11-04.jpeg' },
+  { sku:'LL-CAN-12IN-CHTRA-AA11-05',  url:'https://bibtsjtpsveadrkxuihr.supabase.co/storage/v1/object/public/Art/LL-CAN-12IN-CHTRA-AA11-05.jpeg' },  
+
 ];
 
 /* Parse SKU into structured data */
